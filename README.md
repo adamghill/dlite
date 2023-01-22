@@ -6,35 +6,37 @@
 
 ![npm (tag)](https://img.shields.io/npm/v/dlite/latest.svg?style=flat-square) [![gzip bundle size](http://img.badgesize.io/https://unpkg.com/dlite@latest/dist/dlite.es.js?compression=gzip&style=flat-square)](https://unpkg.com/dlite) ![NPM](https://img.shields.io/npm/l/dlite.svg?style=flat-square) ![GitHub Sponsors](https://img.shields.io/github/sponsors/adamghill?color=blue&style=flat-square)
 
-## 📖 Full documentation
+## 📖 Complete documentation
 
 https://dlitejs.com
 
 ## 🧐 Introduction
 
-`dlite` creates `Web Components` and interactive web pages easily without the bloat of big frameworks. It can be effortlessly added into existing HTML pages and to add components throughout a web application. `dlite` is perfect for developers working on simple, but dynamic static sites or when you want to progressively upgrade your site without changing too much.
+`dlite` creates `Web Components` and interactive web pages easily without the bloat of big frameworks. It can be effortlessly added into existing HTML pages to create reusable components for web applications. `dlite` is perfect for simple, but dynamic static sites or when you want to progressively upgrade a site without changing too much.
 
 ## ⭐ Features
 
 - Seriously tiny: **~3.5kb** when gzipped
-- Reactive Web Components
+- Reactive web components
 - Internal state manager
-- Progressive templating language that leverages `template literals`
+- Progressive template language that leverages `template literals`
 - Props
 - Lifecycle
 - State management
-- Computer properties
+- Computed properties
 - One-way data flow
-- Two-way data binding and events handling
+- Two-way data binding
+- Events handling
 - Component lifecycle hooks
 - Directives (e.g. `if`/`else`, `for`, `style`, `class`)
-- No dependencies, no virtual DOM, no JSX, and no build tool required -- put a script tag in your HTML and _go_
+- No dependencies, no virtual DOM, no JSX, and no build tool required
+- Put a script tag in your HTML and _go_ ⚡
 
 It is compatible with all modern browsers that support [`ES2015`/`ES6`](https://caniuse.com/#feat=es6), [`ESM`](https://caniuse.com/?search=esm), and [`Proxy`](https://caniuse.com/#search=proxy).
 
 ## 🔧 Installation
 
-The easiest way to use `dlite` is within a script tag.
+The easiest way to use `dlite` is with a script tag.
 
 ```html
 <script type="module">
@@ -124,7 +126,7 @@ Similar projects to `dlite` are listed on https://unsuckjs.com/.
 
 `dlite` is forked from the fantastic work done by [Mardix](https://github.com/mardix) with [Litedom](https://github.com/mardix/litedom).
 
-It also includes some code from these great libraries:
+It includes code from these great libraries:
 - https://github.com/bryhoyt/emerj 
 - https://github.com/sindresorhus/on-change
 
