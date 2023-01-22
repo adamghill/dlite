@@ -7,7 +7,7 @@
   "description": "A tiny, blazing fast view library that creates reactive Web Components.",
   "main": "dist/dlite.es.js",
   "module": "dist/dlite.es.js",
-  "files": ["dist", "src", "docs"],
+  "files": ["dist", "src", "docs/source"],
   "scripts": {
     "size": "gzip-size ./dist/dlite.es.js",
     "ts": "tsc",
