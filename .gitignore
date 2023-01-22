@@ -23,7 +23,6 @@ MANIFEST
 node_modules/
 package-lock.json
 
-site/
 dev/
 perf/
 docs/build/
