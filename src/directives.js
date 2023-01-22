@@ -1,11 +1,7 @@
 /**
- * Litedom
- */
-
-/**
- * The order is important, specially for :for and :if
  * @type {object}
- * */
+ */
+// The order is important, especially for :for and :if
 const DIRECTIVES_LIST = {
   $key: _key,
   $class: _class,
@@ -15,14 +11,28 @@ const DIRECTIVES_LIST = {
   $text: _text,
 };
 
-const md = dir => `\:${dir}`;
-const has = (el, dir) => el.hasAttribute(md(dir));
-const get = (el, dir) => el.getAttribute(md(dir));
-const remove = (el, dir) => el.removeAttribute(md(dir));
-const query = (el, dir) => el.querySelector(`[\\${md(dir)}]`);
-const queryAll = (el, dir) => el.querySelectorAll(`[\\${md(dir)}]`);
-const beforeText = (el, text) => el.insertAdjacentText('beforebegin', text);
-const afterText = (el, text) => el.insertAdjacentText('afterend', text);
+const md = (dir) => {
+  return `\:${dir}`;
+};
+const has = (el, dir) => {
+  return el.hasAttribute(md(dir));
+};
+const get = (el, dir) => {
+  return el.getAttribute(md(dir));
+};
+const remove = (el, dir) => {
+  return el.removeAttribute(md(dir));
+};
+// const query = (el, dir) => el.querySelector(`[\\${md(dir)}]`);
+const queryAll = (el, dir) => {
+  return el.querySelectorAll(`[\\${md(dir)}]`);
+};
+const beforeText = (el, text) => {
+  return el.insertAdjacentText("beforebegin", text);
+};
+const afterText = (el, text) => {
+  return el.insertAdjacentText("afterend", text);
+};
 const wrapAround = (el, before, after) => {
   beforeText(el, before);
   afterText(el, after);
@@ -30,21 +40,25 @@ const wrapAround = (el, before, after) => {
 
 /**
  * Parse directives
- * @param {HTMLElement} el the element
- * @param {object} customDirectives custom directives to expand functionalities
+ * @param {HTMLElement} el The element
+ * @param {object} customDirectives Custom directives to expand functionalities
  * @return {HTMLElement}
  */
 export function parseDirectives(el, customDirectives = {}) {
   const directives = { ...customDirectives, ...DIRECTIVES_LIST };
+
   for (const $dir in directives) {
-    const directive = $dir.replace('$', '');
+    const directive = $dir.replace("$", "");
+
     for (const el2 of queryAll(el, directive)) {
       if (has(el2, directive)) {
         const value = get(el2, directive);
+
         directives[$dir](el2, value, directive);
       }
     }
   }
+
   return el;
 }
 
@@ -58,10 +72,12 @@ export function parseDirectives(el, customDirectives = {}) {
 function _if(el, value, directive) {
   remove(el, directive);
   beforeText(el, `\${${value} ? `);
+
   const rElse = el.nextElementSibling;
-  if (rElse && has(rElse, 'else')) {
+
+  if (rElse && has(rElse, "else")) {
     wrapAround(el, `\``, `\``);
-    remove(rElse, 'else');
+    remove(rElse, "else");
     wrapAround(rElse, `:\``, `\`}`);
   } else {
     wrapAround(el, `\``, `\`:\`\`}`);
@@ -69,7 +85,7 @@ function _if(el, value, directive) {
 }
 
 /**
- * :for director
+ * :for directive
  * @todo: add for else => :else for for, it's an if condition that test the length,
  * @param {HTMLElement} el
  * @param {string} value
@@ -78,10 +94,17 @@ function _if(el, value, directive) {
  */
 function _for(el, value, directive) {
   const groups = /(.*)\s+(in)\s+(.*)$/.exec(value);
+
   if (groups.length === 4) {
-    const sel = groups[1].replace('(', '').replace(')', '');
+    const sel = groups[1].replace("(", "").replace(")", "");
     const query = groups[3];
-    wrapAround(el, `\${${query}.map(function(${sel}) { return \``, `\`}.bind(this)).join('')}`);
+
+    wrapAround(
+      el,
+      `\${${query}.map(function(${sel}) { return \``,
+      `\`}.bind(this)).join('')}`
+    );
+
     remove(el, directive);
   }
 }
@@ -97,12 +120,13 @@ function _for(el, value, directive) {
  */
 function _class(el, value, directive) {
   const klass = value
-    .split(';')
-    .map(v => v.split(':', 2).map(e => e.trim()))
-    .map(v => `\${${v[1]} ? '${v[0]}': ''}`)
-    .join(' ');
-  const classList = (el.getAttribute('class') || '') + ` ${klass}`;
-  el.setAttribute('class', classList);
+    .split(";")
+    .map((v) => v.split(":", 2).map((e) => e.trim()))
+    .map((v) => `\${${v[1]} ? '${v[0]}': ''}`)
+    .join(" ");
+  const classList = (el.getAttribute("class") || "") + ` ${klass}`;
+  el.setAttribute("class", classList);
+
   remove(el, directive);
 }
 
@@ -116,14 +140,24 @@ function _class(el, value, directive) {
  * @returns {void}
  */
 function _key(el, value, directive) {
-  el.setAttribute('ref-key', value);
+  el.setAttribute("ref-key", value);
+
   remove(el, directive);
 }
 
+/**
+ * :style directive
+ * <div :style="this.style"></div>
+ * @param {HTMLElement} el
+ * @param {string} value
+ * @param {string} directive
+ * @returns {void}
+ */
 function _style(el, value, directive) {
-  const oStyle = el.getAttribute('style') || '';
+  const oStyle = el.getAttribute("style") || "";
   const style = `\${function() { return this.__$styleMap(${value});}.call(this)}`;
-  el.setAttribute('style', (oStyle ? oStyle + '; ' : '') + style);
+
+  el.setAttribute("style", (oStyle ? oStyle + "; " : "") + style);
   remove(el, directive);
 }
 
@@ -138,5 +172,6 @@ function _style(el, value, directive) {
  */
 function _text(el, value, directive) {
   el.textContent = value;
+
   remove(el, directive);
 }

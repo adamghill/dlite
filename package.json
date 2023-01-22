@@ -1,36 +1,40 @@
 {
-  "name": "litedom",
-  "pkgName": "Litedom",
-  "version": "0.2.0",
-  "author": "Mardix",
+  "name": "dlite",
+  "pkgName": "dlite",
+  "version": "0.13.0",
+  "author": "adamghill",
   "license": "MIT",
-  "description": "A blazing fast view library to create Web Components and use Javascript Template Literals in HTML",
-  "main": "dist/litedom.es.js",
-  "module": "dist/litedom.es.js",
+  "description": "A tiny, blazing fast view library that creates reactive Web Components.",
+  "main": "dist/dlite.es.js",
+  "module": "dist/dlite.es.js",
   "scripts": {
-    "size": "gzip-size ./dist/litedom.es.js",
-    "check-ts": "tsc",
+    "size": "gzip-size ./dist/dlite.es.js",
+    "ts": "tsc",
     "publish-docs-0": "cd ./docs && mambo build",
     "publish-docs": "npm run publish-docs-0 && cd ./docs && gh-pages -d .build",
-    "test": "jest ./test/",
-    "test-0": "jest --verbose ./test/",
-    "build-i": "npm run build && npm run size",
-    "build": "rollup -c ",
+    "t": "jest",
+    "tv": "jest --verbose",
+    "tw": "jest --watch",
+    "b": "npm run build && stat -f%z dist/dlite.es.js | numfmt --to=iec --suffix=B --format='%.2f' && gzip-size ./dist/dlite.es.js",
+    "build": "rollup -c",
     "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
     "publish-pkg": "cross-var npm run test && npm run build && npm run commit-publish-tag && npm publish && npm run size",
-    "test-publish-pkg": "cross-var npm run test && npm run build && npm run commit-publish-tag && npm run size"
+    "test-publish-pkg": "cross-var npm run test && npm run build && npm run commit-publish-tag && npm run size",
+    "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=. dev-server",
+    "sb": "poetry run sphinx-build -W docs/source docs/build",
+    "sa": "poetry run sphinx-autobuild -W docs/source docs/build"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mardix/litedom.git"
+    "url": "git+https://github.com/adamghill/dlite.git"
   },
   "bugs": {
-    "url": "https://github.com/mardix/litedom/issues"
+    "url": "https://github.com/adamghill/dlite/discussions"
   },
-  "homepage": "https://github.com/mardix/litedom",
+  "homepage": "https://github.com/adamghill/dlite",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
@@ -44,7 +48,6 @@
     "rollup": "^1.8.0",
     "rollup-plugin-banner": "^0.2.0",
     "rollup-plugin-terser": "^4.0.4",
-    "typescript": "^3.4.5"
-  },
-  "dependencies": {}
+    "typescript": "^4.9.4"
+  }
 }

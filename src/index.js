@@ -1,30 +1,28 @@
-/**
- * Litedom
- */
-
-// @ts-check
-
-import Component from './component.js';
+import Component from "./component.js";
 import {
   randomChars,
   selector,
   isDisplayNone,
   isVisibilityHidden,
-} from './utils.js';
+} from "./utils.js";
 
-const error = msg => new Error(`Litedom Error: ${msg}`);
+const error = (msg) => {
+  new Error(`dlite error: ${msg}`);
+};
 
 /**
  * Generate random custom element tag
  * @returns {string}
  */
-const genRandomCustomElementTagName = () => `litedom-${randomChars()}`;
+const genRandomCustomElementTagName = () => {
+  return `dlite-${randomChars()}`;
+};
 
 /**
- * Litedom default function initializer
+ * dlite default function initializer
  * @param {object} options the configuration
  */
-function Litedom(options) {
+function Dlite(options) {
   const opt = {
     /**
      * el
@@ -65,6 +63,7 @@ function Litedom(options) {
     shadowDOM: false,
     ...options,
   };
+
   let el = null;
 
   const hasTagName = !!opt.tagName;
@@ -79,30 +78,47 @@ function Litedom(options) {
      * visibility:hidden or display:none to hide before rendering
      * This will make sure it's removed
      */
-    if (isVisibilityHidden(el)) el.style.visibility = 'visible';
-    if (isDisplayNone(el)) el.style.display = '';
+    if (isVisibilityHidden(el)) {
+      el.style.visibility = "visible";
+    }
 
-    if (!opt.template) opt.template = el.innerHTML;
-    el.innerHTML = '';
+    if (isDisplayNone(el)) {
+      el.style.display = "";
+    }
+
+    if (!opt.template) {
+      opt.template = el.innerHTML;
+    }
+
+    el.innerHTML = "";
+
     if (!hasTagName) {
       const tagEl = document.createElement(opt.tagName);
-      if (opt.refId) tagEl.setAttribute('ref-id', opt.refId);
+
+      if (opt.refId) {
+        tagEl.setAttribute("ref-id", opt.refId);
+      }
+
       el.parentNode.replaceChild(tagEl, el);
     }
   }
 
-  if (!opt.template)
-    throw error(`missing 'template' option or 'el' are not valid elements`);
+  if (!opt.template) {
+    throw error(`Missing 'template' option or 'el' is not valid element.`);
+  }
+
   Component(opt);
 }
 
 /**
  *
- * @param {object|array} config object of Litedom options or array of options
+ * @param {object|array} options, config object of dlite options or array of options
  * @param {object} sharedOptions, to share global options, ie: $store, $router, $events
  */
 export default (options, sharedOptions = {}) => {
-  if (Array.isArray(options))
-    options.map(o => Litedom({ ...sharedOptions, ...o }));
-  else Litedom(options);
+  if (Array.isArray(options)) {
+    options.map((o) => Dlite({ ...sharedOptions, ...o }));
+  } else {
+    Dlite(options);
+  }
 };

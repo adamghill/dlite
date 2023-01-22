@@ -1,6 +1,3 @@
-// Litedom
-// @ts-check
-
 /**
  * Turn camelCase to kebab-case
  * kebabCase('userId') => "user-id"
@@ -9,7 +6,9 @@
  * @param {string} s
  * @returns {string}
  */
-export const kebabCase = s => s.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase();
+export const kebabCase = (s) => {
+  return s.replace(/([a-zA-Z])(?=[A-Z])/g, "$1-").toLowerCase();
+};
 
 /**
  * Convert string to camelCase
@@ -20,7 +19,9 @@ export const kebabCase = s => s.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCa
  * @param {string} s
  * @returns {string}
  */
-export const camelCase = s => s.replace(/[-_\s+]([a-z])/g, g => g[1].toUpperCase());
+export const camelCase = (s) => {
+  return s.replace(/[-_\s+]([a-z])/g, (g) => g[1].toUpperCase());
+};
 
 /**
  * Turn an object into a stylemap to be used in inline css
@@ -32,10 +33,11 @@ export const camelCase = s => s.replace(/[-_\s+]([a-z])/g, g => g[1].toUpperCase
  * @param {object} o
  * @returns {string}
  */
-export const styleMap = o =>
-  Object.keys(o)
-    .map(k => `${kebabCase(k)}: ${o[k]};`)
-    .join(' ');
+export const styleMap = (o) => {
+  return Object.keys(o)
+    .map((k) => `${kebabCase(k)}: ${o[k]};`)
+    .join(" ");
+};
 
 /**
  * Set a value in an object via dot notation
@@ -46,27 +48,33 @@ export const styleMap = o =>
  */
 export const set = (obj, path, value) => {
   let ref = obj;
-  const keys = path.split('.');
+  const keys = path.split(".");
+
   while (keys.length) {
     const key = keys.shift();
     ref[key] = keys.length ? (ref[key] ? ref[key] : {}) : value;
     ref = ref[key];
   }
 };
+
 /**
  * Get a value in an object via dot notation
  * @param {object} obj
  * @param {string} path
  * @returns {any}
  */
-export const get = (obj, path) => path.split('.').reduce((acc, part) => acc && acc[part], obj);
+export const get = (obj, path) => {
+  return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+};
 
 /**
  * Check if an object is a function
  * @param {object} o
  * @returns {boolean}
  */
-export const isFn = o => typeof o === 'function';
+export const isFn = (o) => {
+  return typeof o === "function";
+};
 
 /**
  * isObjKeyFn isFunction
@@ -74,44 +82,63 @@ export const isFn = o => typeof o === 'function';
  * @param {string} key
  * @returns {boolean}
  */
-export const isObjKeyFn = (obj, key) => obj && isFn(obj[key]);
+export const isObjKeyFn = (obj, key) => {
+  return obj && isFn(obj[key]);
+};
 
 /**
  * check if an object is HTMLElement
  * @param {any} obj
  * @returns
  */
-export const isElement = obj => obj instanceof HTMLElement;
+export const isElement = (obj) => {
+  return obj instanceof HTMLElement;
+};
 
 /**
  * Return a HTMLElement
  * @param {any} el
  * @returns {HTMLElement}
  */
-export const selector = el => (typeof el === 'string' ? document.querySelector(el) : el);
+export const selector = (el) => {
+  return typeof el === "string" ? document.querySelector(el) : el;
+};
 
-const windowStyle = el => window.getComputedStyle(el);
+/**
+ * Get computed window style.
+ * @param {HTMLElement} el
+ * @returns {CSSStyleDeclaration}
+ */
+const windowStyle = (el) => {
+  return window.getComputedStyle(el);
+};
 
 /**
  * Check if an element has visibility:hidden
  * @param {HTMLElement} el
  * @returns {boolean}
  */
-export const isVisibilityHidden = el => windowStyle(el).visibility === 'hidden';
+export const isVisibilityHidden = (el) => {
+  return windowStyle(el).visibility === "hidden";
+};
 
 /**
  * Check if an element has display:none
  * @param {HTMLElement} el
  * @returns {boolean}
  */
-export const isDisplayNone = el => windowStyle(el).display === 'none';
+export const isDisplayNone = (el) => {
+  return windowStyle(el).display === "none";
+};
 
 /**
  * Turn an HTML string into HTMLElement
  * @param {string} html
  * @returns {HTMLElement}
  */
-export const htmlToDom = html => new DOMParser().parseFromString(html, 'text/html').body; //.firstChild;
+export const htmlToDom = (html) => {
+  return new DOMParser().parseFromString(html, "text/html").body; //.firstChild;
+};
 
 /**
  * Get a string and turn it into template literal
@@ -121,14 +148,21 @@ export const htmlToDom = html => new DOMParser().parseFromString(html, 'text/htm
  * x = parseLit(string)
  * x(state) // to update
  */
-export const parseLit = tpl => state => new Function(`return \`${tpl}\``).call(state);
+export const parseLit = (tpl) => (state) => {
+  return new Function(`return \`${tpl}\``).call(state);
+};
 
 /**
  * Convert a string that contains {...} to ${...}
  * @param {string} str
  * @returns {string}
  */
-export const toStrLit = str => str.replace(/\$?\{([^\;\{]+)\}/g, (_, expression) => `\${${expression}}`);
+export const toStrLit = (str) => {
+  return str.replace(
+    /\$?\{([^\;\{]+)\}/g,
+    (_, expression) => `\${${expression}}`
+  );
+};
 
 /**
  * Create a function that receive data to create computed state
@@ -138,7 +172,9 @@ export const toStrLit = str => str.replace(/\$?\{([^\;\{]+)\}/g, (_, expression)
  * myCs({name: 'Mardix'})
  * myCs.fullName -> Mardix
  */
-export const computeState = (key, fn) => state => (state[key] = fn({ ...state }));
+export const computeState = (key, fn) => (state) => {
+  return (state[key] = fn({ ...state }));
+};
 
 /**
  *
@@ -147,16 +183,22 @@ export const computeState = (key, fn) => state => (state[key] = fn({ ...state })
  * @param {any} interval
  * @returns {any}
  */
-export const debounce = (callback, time = 250, interval) => (...args) =>
-  clearTimeout(interval, (interval = setTimeout(callback, time, ...args)));
+export const debounce = (callback, time = 250, interval) => {
+  (...args) => {
+    return clearTimeout(
+      interval,
+      (interval = setTimeout(callback, time, ...args))
+    );
+  };
+};
 
 /**
  * @type {array}
  */
 const decodeHTMLList = [
-  ['&lt;', '<'],
-  ['&gt;', '>'],
-  ['&amp;', '&'],
+  ["&lt;", "<"],
+  ["&gt;", ">"],
+  ["&amp;", "&"],
 ];
 
 /**
@@ -165,8 +207,12 @@ const decodeHTMLList = [
  * @param {string} str
  * @returns {string}
  */
-export const decodeHTMLStringForDirective = str =>
-  decodeHTMLList.reduce((pV, cK) => pV.replace(new RegExp(cK[0], 'g'), cK[1]), str);
+export const decodeHTMLStringForDirective = (str) => {
+  return decodeHTMLList.reduce(
+    (pV, cK) => pV.replace(new RegExp(cK[0], "g"), cK[1]),
+    str
+  );
+};
 
 /**
  * Returns all attributes into an object
@@ -174,26 +220,26 @@ export const decodeHTMLStringForDirective = str =>
  * @param {boolean} camelCaseIt
  * @returns {object}
  */
-export const getAttrs = (el, camelCaseIt = false) =>
-  Object.freeze(
+export const getAttrs = (el, camelCaseIt = false) => {
+  return Object.freeze(
     Array.from(el.attributes)
-      .map(e => ({ [camelCaseIt ? camelCase(e.name) : e.name]: e.value }))
+      .map((e) => ({ [camelCaseIt ? camelCase(e.name) : e.name]: e.value }))
       .reduce((pV, cK) => ({ ...pV, ...cK }), {})
   );
+};
 
-const proxyTarget = '#';
-const isPrimitive = value => value === null || !['function', 'object'].includes(typeof value);
+const proxyTarget = "#";
+const isPrimitive = (value) => {
+  return value === null || !["function", "object"].includes(typeof value);
+};
 
 /**
  * Generate random chars. Mainly to use in webcomponent without name
- * @param {number} l the length
  * @return {string}
  */
-export const randomChars = (l = 7) =>
-  Math.random()
-    .toString(36)
-    .substr(2, l)
-    .toLowerCase();
+export const randomChars = () => {
+  return Math.random().toString(36).substring(2, 9).toLowerCase();
+};
 
 /**
  * objectOnChange
@@ -230,7 +276,7 @@ export const objectOnChange = (object, onChange) => {
     get(target, property, receiver) {
       if (property === proxyTarget) return target;
       const value = Reflect.get(target, property, receiver);
-      if (isPrimitive(value) || property === 'constructor') return value;
+      if (isPrimitive(value) || property === "constructor") return value;
 
       const descriptor = getOwnPropertyDescriptor(target, property);
       if (descriptor && !descriptor.configurable) {
@@ -271,7 +317,9 @@ export const objectOnChange = (object, onChange) => {
       return Reflect.apply(target, thisArg, argumentsList);
     },
   };
+
   const proxy = new Proxy(object, handler);
+
   return proxy;
 };
 
@@ -281,11 +329,17 @@ export const objectOnChange = (object, onChange) => {
  * @returns {object}
  */
 function deepCopy(obj) {
-  if (obj === null || typeof obj !== 'object') return obj;
-  var temp = obj.constructor();
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) temp[key] = immu(obj[key]);
+  if (obj === null || typeof obj !== "object") {
+    return obj;
   }
+
+  var temp = obj.constructor();
+
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key))
+      temp[key] = immu(obj[key]);
+  }
+
   return temp;
 }
 
@@ -295,11 +349,18 @@ function deepCopy(obj) {
  * @returns {object}
  */
 function deepFreeze(obj) {
-  if (obj === null || typeof obj !== 'object') return obj;
-  Object.keys(obj).forEach(function(name) {
+  if (obj === null || typeof obj !== "object") {
+    return obj;
+  }
+
+  Object.keys(obj).forEach(function (name) {
     const prop = obj[name];
-    if (prop !== null && typeof prop === 'object') deepFreeze(prop);
+
+    if (prop !== null && typeof prop === "object") {
+      deepFreeze(prop);
+    }
   });
+
   return Object.freeze(obj);
 }
 
@@ -308,4 +369,6 @@ function deepFreeze(obj) {
  * @param {object} obj
  * @returns {object}
  */
-export const immu = obj => deepFreeze(deepCopy(obj));
+export const immu = (obj) => {
+  return deepFreeze(deepCopy(obj));
+};

@@ -1,8 +1,5 @@
-/** Litedom */
-// @ts-check
-
-import { bindEvents } from './events.js';
-import { getAttrs, objectOnChange, styleMap, immu } from './utils.js';
+import { bindEvents } from "./events.js";
+import { getAttrs, objectOnChange, styleMap, immu } from "./utils.js";
 import {
   filterMethods,
   filterComputedState,
@@ -12,7 +9,7 @@ import {
   bindPublicMethodsToContext,
   domConnector,
   __$bindInput,
-} from './component-helpers.js';
+} from "./component-helpers.js";
 
 /**
  * Private context included data and functions
@@ -26,39 +23,56 @@ export default function Component(options = {}) {
   const opt = {
     /**
      * @type {boolean}
-     * if false Web Component will be custom element, else shadow dom*/
+     * Whether Web Component will be shadow DOM otherwise it will be a custom element
+     */
     shadowDOM: false,
+
     /**
+     * The element tag name.
      * @type {string}
-     * the element tag name */
+     */
     tagName: null,
+
     /**
+     * Local state data.
      * @type {object}
-     * local state data */
+     */
     data: {},
+
     /**
+     * The template.
      * @type {string}
-     * The template*/
+     */
     template: null,
+
     /**
+     * Global store/state manager.
      * @type {{getState: function, subscribe: function }}
-     * for global store/state manager */
+     */
     $store: { getState: () => undefined, subscribe: () => () => {} },
+
     /**
+     * Lifecycle method that gets called when the component is created.
      * @type {function}
-     * lifecycle */
+     */
     created() {},
+
     /**
+     * Lifecycle method that gets called when the component is updated.
      * @type {function}
-     * lifecycle */
+     */
     updated() {},
+
     /**
+     * Lifecycle method that gets called when the component is removed.
      * @type {function}
-     * lifecycle */
+     */
     removed() {},
+
     /**
+     * Additional options.
      * @type {any}
-     * */
+     */
     ...options,
   };
 
@@ -70,7 +84,7 @@ export default function Component(options = {}) {
   const gobal$Object = filterGlobal$Object(opt);
 
   /** @type {function} update the computed states */
-  const updateComputedState = state => computedState.forEach(s => s(state));
+  const updateComputedState = (state) => computedState.forEach((s) => s(state));
 
   /**
    * Define and Register the WebComponent
@@ -84,7 +98,7 @@ export default function Component(options = {}) {
         /**
          * @type {Element|ShadowRoot}
          * use a custom element or shadow dom */
-        this.$root = opt.shadowDOM ? this.attachShadow({ mode: 'open' }) : this;
+        this.$root = opt.shadowDOM ? this.attachShadow({ mode: "open" }) : this;
       }
 
       /**
