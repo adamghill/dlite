@@ -1,3 +1,5 @@
+# 0.13.1
+- Remove unnecessary files
 
 # 0.13.0
 - Rename `litedom` to `dlite`
@@ -8,7 +10,7 @@
 - Add try/catch to fix wrong type
   
 # 0.12.0
-- Fixed two way databa binding to set initial value
+- Fixed two way data binding to set initial value
   
 # 0.11.2
 - Fixed race condition in component-helpers.storeConnector. 

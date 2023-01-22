@@ -1,9 +1,9 @@
 /**
- * dlite v0.13.0 
+ * dlite v0.13.1 
  * Copyright 2023 adamghill
  * License: MIT
  * https://github.com/adamghill/dlite
- * Build date: 1/21/2023, 10:58:32 PM
+ * Build date: 1/22/2023, 12:57:15 AM
  * 
  */
 
