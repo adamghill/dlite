@@ -1,4 +1,4 @@
-import Compolite from '../src/index.js';
+import Dlite from "../src/index.js";
 
 const template = `
   <div>Text: {this.form.text}</div>
@@ -21,15 +21,15 @@ const template = `
   </select></div>
 `;
 
-export default Compolite({
+export default Dlite({
   template,
-  tagName: 'my-counter',
+  tagName: "my-counter",
   data: {
     form: {
-      text: '',
-      radio: 'Mr',
+      text: "",
+      radio: "Mr",
       checks: [],
-      city: '',
+      city: "",
     },
   },
 });

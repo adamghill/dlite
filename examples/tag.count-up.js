@@ -1,18 +1,19 @@
-import Compolite from '../src/index.js';
+import Dlite from "../src/index.js";
 
 const template = `
 Counting: {this.count} 
 `;
 
-export default Compolite({
+export default Dlite({
   template,
-  tagName: 'count-up',
+  tagName: "count-up",
   data: {
     count: 0,
   },
   created() {
     this.data.count = this.prop.start || 0;
-    setInterval(_ => {
+
+    setInterval((_) => {
       this.data.count++;
     }, 1000);
   },

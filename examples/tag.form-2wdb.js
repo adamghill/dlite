@@ -1,4 +1,4 @@
-import Compolite from '../src/index.js';
+import Dlite from "../src/index.js";
 
 const template = `
   <div>Text: {this.form.text}</div>
@@ -23,19 +23,19 @@ const template = `
   <textarea @bind="form.text2"></textarea>
 `;
 
-export default Compolite({
+export default Dlite({
   template,
-  tagName: 'form-2wdb',
+  tagName: "form-2wdb",
   data: {
     form: {
-      text: 'Something is here',
-      text2: 'This is it people!',
-      radio: ['Mrs.'],
-      checks: ['up', 'left'],
-      city: 'Concord',
+      text: "Something is here",
+      text2: "This is it people!",
+      radio: ["Mrs."],
+      checks: ["up", "left"],
+      city: "Concord",
     },
   },
   updated() {
-    console.log('I', this.data);
+    console.log("I", this.data);
   },
 });
