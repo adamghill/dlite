@@ -8,6 +8,7 @@
   "main": "dist/dlite.es.js",
   "module": "dist/dlite.es.js",
   "files": ["dist", "src", "docs/source"],
+  "keywords": ["reactive", "bind", "view", "templating", "directives", "dom"],
   "scripts": {
     "size": "gzip-size ./dist/dlite.es.js",
     "ts": "tsc",
