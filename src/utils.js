@@ -346,7 +346,7 @@ function deepCopy(obj) {
 
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      temp[key] = immu(obj[key]);
+      temp[key] = freeze(obj[key]);
     }
   }
 
@@ -379,6 +379,6 @@ function deepFreeze(obj) {
  * @param {object} obj
  * @returns {object}
  */
-export const immu = (obj) => {
+export const freeze = (obj) => {
   return deepFreeze(deepCopy(obj));
 };

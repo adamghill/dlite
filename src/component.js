@@ -1,5 +1,5 @@
 import { bindEvents } from "./events.js";
-import { getAttrs, objectOnChange, styleMap, immu } from "./utils.js";
+import { getAttrs, objectOnChange, styleMap, freeze } from "./utils.js";
 import {
   filterMethods,
   filterComputedState,
@@ -177,7 +177,7 @@ export default function Component(options = {}) {
        * @returns {object} immutable object
        */
       get data() {
-        return immu(this._state);
+        return freeze(this._state);
       }
     }
   );

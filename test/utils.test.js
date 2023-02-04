@@ -17,7 +17,6 @@ import {
   kebabCase,
   camelCase,
   styleMap,
-  immu,
 } from "../src/utils.js";
 
 describe("isFn", () => {
