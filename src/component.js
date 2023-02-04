@@ -10,6 +10,12 @@ import {
   domConnector,
   __$bindInput,
 } from "./component-helpers.js";
+import {
+  randomChars,
+  selector,
+  isDisplayNone,
+  isVisibilityHidden,
+} from "./utils.js";
 
 /**
  * Private context included data and functions
@@ -119,9 +125,31 @@ export default function Component(options = {}) {
 
         const data = objectOnChange(this._state, () => {
           updateComputedState(this._state);
+
           if (dom.render(this.$root, { ...this._state, ...renderContext })) {
             opt.updated.call(this.context);
             //this._dispatchEventHooks('updated');
+          }
+
+          /**
+           * To prevent the flickering of the element or showing placeholders,
+           * it's recommended to set
+           * visibility:hidden or display:none to hide before rendering
+           * This will make sure it's removed
+           */
+          let $el = this.$root;
+
+          if ($el.host) {
+            $el = $el.host;
+          }
+
+          if (isVisibilityHidden($el)) {
+            $el.style.visibility = "visible";
+            $el.hidden = false;
+          }
+
+          if (isDisplayNone($el)) {
+            $el.style.display = "";
           }
         });
 
@@ -146,7 +174,9 @@ export default function Component(options = {}) {
 
         // Initial setup + first rendering
         updateComputedState(this._state);
+
         dom.render(this.$root, { ...this._state, ...renderContext });
+
         opt.created.call(this.context);
       }
 

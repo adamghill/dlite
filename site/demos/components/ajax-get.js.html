@@ -1,0 +1,16 @@
+<style>
+  ajax-get {
+    color: blue;
+  }
+</style>
+
+<h1>{this.prop.url ? this.prop.url : 'https://www.boredapi.com/api/activity'}</h1>
+<div>
+  <h2>{this.activity.activity}</h2>
+  <ul>
+    <li>Type: {this.activity.type}</li>
+    <li>Price: {this.activity.price}</li>
+    <li>Accessibility: {this.activity.accessibility}</li>
+    <li>Participants: {this.activity.participants}</li>
+  </ul>
+</div>

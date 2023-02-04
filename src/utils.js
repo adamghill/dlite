@@ -119,7 +119,7 @@ const windowStyle = (el) => {
  * @returns {boolean}
  */
 export const isVisibilityHidden = (el) => {
-  return windowStyle(el).visibility === "hidden";
+  return windowStyle(el).visibility === "hidden" || el.hidden;
 };
 
 /**

@@ -1,10 +1,5 @@
 import Component from "./component.js";
-import {
-  randomChars,
-  selector,
-  isDisplayNone,
-  isVisibilityHidden,
-} from "./utils.js";
+import { randomChars, selector } from "./utils.js";
 
 const error = (msg) => {
   new Error(`dlite error: ${msg}`);
@@ -64,27 +59,11 @@ function Dlite(options) {
     ...options,
   };
 
-  let el = null;
-
   const hasTagName = !!opt.tagName;
   opt.tagName = opt.tagName || genRandomCustomElementTagName();
 
   if (opt.el) {
-    el = selector(opt.el);
-
-    /**
-     * To prevent the flickering of the element or showing placeholders,
-     * it's recommended to set
-     * visibility:hidden or display:none to hide before rendering
-     * This will make sure it's removed
-     */
-    if (isVisibilityHidden(el)) {
-      el.style.visibility = "visible";
-    }
-
-    if (isDisplayNone(el)) {
-      el.style.display = "";
-    }
+    let el = selector(opt.el);
 
     if (!opt.template) {
       opt.template = el.innerHTML;
