@@ -3,6 +3,7 @@
 - Attaching components to a `Shadow DOM` is now the default; this will be useful for encapsulation and scoped styles in the future
 - Set styles on custom element when on an initial `el`
 - Add demo for how to use shared component template
+- Switch to `vitest` from `jest` for quicker unit tests
 
 # 0.13.1
 - Remove unnecessary files
