@@ -116,11 +116,6 @@ export default function Component(options = {}) {
        * @returns {void}
        */
       connectedCallback() {
-        this.$eventHooks = {
-          updated: [],
-          removed: [],
-        };
-
         this._state = {
           ...this._state,
           ...initialState,
@@ -132,8 +127,6 @@ export default function Component(options = {}) {
 
           if (dom.render(this.$root, { ...this._state, ...renderContext })) {
             opt.updated.call(this.context);
-
-            //this._dispatchEventHooks('updated');
           }
 
           // Make the `Custom Element` visible now that it's been rendered
@@ -177,8 +170,6 @@ export default function Component(options = {}) {
       disconnectedCallback() {
         opt.removed.call(this.context);
         this.disconnectStore();
-        //this._dispatchEventHooks('removed');
-        this.$eventHooks = [];
       }
 
       /**
@@ -188,15 +179,6 @@ export default function Component(options = {}) {
       get data() {
         return immu(this._state);
       }
-
-      // $on(hook, callback) {
-      //   this.$eventHooks[hook].push(callback);
-      //   return () => this.$eventHooks[hook].splice(this.$eventHooks[hook].indexOf(callback), 1);
-      // }
-
-      // _dispatchEventHooks(hook) {
-      //   if (hook in this.$eventHooks) this.$eventHooks[hook].forEach(s => s(this.data));
-      // }
     }
   );
 }
