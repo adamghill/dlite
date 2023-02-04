@@ -56,9 +56,9 @@ Dlite({
 To access the store `this.$store` will return the values from `$store.getState()`.
 
 ```html
-<div id="app">
+<template id="app">
   {this.$store.fullName}
-</div>
+</template>
 ```
 
 ## Example with `Litestate`
@@ -106,14 +106,14 @@ To access the store `this.$store` will return the values from `$store.getState()
   }, ]);
 </script>
 
-<div id="appOne">
+<template id="appOne">
   Hello {this.$store.fullName}!
   <button @call="loadAccount">Load Account</button>
-</div>
+</template>
 
-<div id="appTwo">
+<template id="appTwo">
   <ul>
     <li :for="item in this.$store.accountDetails">{accountName}</li>
   </ul>
-</div>
+</template>
 :::

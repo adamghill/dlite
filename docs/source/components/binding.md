@@ -16,7 +16,7 @@ The `@bind` attribute creates two-way data bindings on `input`, `textarea`, and 
   });
 </script>
 
-<div id="app">
+<template id="app">
   <p>
     Hello {this.salutation} {this.name}
   </p>
@@ -28,5 +28,5 @@ The `@bind` attribute creates two-way data bindings on `input`, `textarea`, and 
   <div>
       <input type="text" name="name" @bind="name">
   </div>
-</div>
+</template>
 :::

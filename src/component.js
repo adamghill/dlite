@@ -10,12 +10,6 @@ import {
   domConnector,
   __$bindInput,
 } from "./component-helpers.js";
-import {
-  randomChars,
-  selector,
-  isDisplayNone,
-  isVisibilityHidden,
-} from "./utils.js";
 
 /**
  * Private context included data and functions
@@ -29,9 +23,9 @@ export default function Component(options = {}) {
   const opt = {
     /**
      * @type {boolean}
-     * Whether Web Component will be shadow DOM otherwise it will be a custom element
+     * Whether the `Custom Element` will be attached to a `Shadow DOM` or not. Defaults to `true`.
      */
-    shadowDOM: false,
+    shadowDOM: true,
 
     /**
      * The element tag name.
@@ -40,7 +34,7 @@ export default function Component(options = {}) {
     tagName: null,
 
     /**
-     * Local state data.
+     * Local state data that will be reactive.
      * @type {object}
      */
     data: {},
@@ -87,9 +81,11 @@ export default function Component(options = {}) {
   const methods = filterMethods(opt);
   const initialState = filterInitialState(opt.data);
   const computedState = filterComputedState(opt.data);
-  const gobal$Object = filterGlobal$Object(opt);
+  const global$Object = filterGlobal$Object(opt);
 
-  /** @type {function} update the computed states */
+  /**
+   * @type {function} update the computed states
+   */
   const updateComputedState = (state) => computedState.forEach((s) => s(state));
 
   /**
@@ -100,10 +96,18 @@ export default function Component(options = {}) {
     class extends HTMLElement {
       constructor() {
         super();
-        // with Shadow dom or leave as `Custom Element`
+
+        this.$el = this;
+
+        // Hide the `Custom Element` until it's rendered
+        this.style.visibility = !this.style.visibility
+          ? "hidden"
+          : this.style.visibility;
+
         /**
-         * @type {Element|ShadowRoot}
-         * use a custom element or shadow dom */
+         * @type {HTMLElement|ShadowRoot}
+         * Attach to a Shadow DOM or just stay a `Custom Element`
+         */
         this.$root = opt.shadowDOM ? this.attachShadow({ mode: "open" }) : this;
       }
 
@@ -128,29 +132,15 @@ export default function Component(options = {}) {
 
           if (dom.render(this.$root, { ...this._state, ...renderContext })) {
             opt.updated.call(this.context);
+
             //this._dispatchEventHooks('updated');
           }
 
-          /**
-           * To prevent the flickering of the element or showing placeholders,
-           * it's recommended to set
-           * visibility:hidden or display:none to hide before rendering
-           * This will make sure it's removed
-           */
-          let $el = this.$root;
-
-          if ($el.host) {
-            $el = $el.host;
-          }
-
-          if (isVisibilityHidden($el)) {
-            $el.style.visibility = "visible";
-            $el.hidden = false;
-          }
-
-          if (isDisplayNone($el)) {
-            $el.style.display = "";
-          }
+          // Make the `Custom Element` visible now that it's been rendered
+          this.$el.style.visibility =
+            this.$el.style.visibility === "hidden"
+              ? "visible"
+              : this.$el.style.visibility;
         });
 
         this.disconnectStore = store(data);
@@ -159,7 +149,7 @@ export default function Component(options = {}) {
         // context contains methods and properties to work on the element
         this.context = {
           ...methods,
-          ...gobal$Object,
+          ...global$Object,
           data,
           el: this.$root,
           prop: this._state.prop,

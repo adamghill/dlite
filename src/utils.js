@@ -105,33 +105,6 @@ export const selector = (el) => {
 };
 
 /**
- * Get computed window style.
- * @param {HTMLElement} el
- * @returns {CSSStyleDeclaration}
- */
-const windowStyle = (el) => {
-  return window.getComputedStyle(el);
-};
-
-/**
- * Check if an element has visibility:hidden
- * @param {HTMLElement} el
- * @returns {boolean}
- */
-export const isVisibilityHidden = (el) => {
-  return windowStyle(el).visibility === "hidden" || el.hidden;
-};
-
-/**
- * Check if an element has display:none
- * @param {HTMLElement} el
- * @returns {boolean}
- */
-export const isDisplayNone = (el) => {
-  return windowStyle(el).display === "none";
-};
-
-/**
  * Turn an HTML string into HTMLElement
  * @param {string} html
  * @returns {HTMLElement}

@@ -19,40 +19,37 @@ async function fetching(url) {
     });
 }
 
-// async function getUrlTemplate(url) {
-//   if (!url.includes(".")) {
-//     url = `${url}.js.html`;
-//   }
-
-//   return fetching(url);
-// }
-
-// TODO: add templateUrl
 // TODO: Handle error and output in html (in "debug mode" only? otherwise to the console?)
 // TODO: Set `this.data` directly
 // TODO: Be able to add keys to `this.data` on the fly
-// TODO: handle hidden/display:none on web component
 
-Dlite([
-  {
-    template: await fetching("components/ajax-get.js.html"),
-    tagName: "ajax-get",
-    data: { activity: {} },
-    // shadowDOM: true,
-    async created() {
-      const activity = await fetching(this.prop.url);
-      this.data.activity = activity;
+Dlite(
+  [
+    {
+      tagName: "ajax-get",
+      template: await fetching("components/ajax-get.js.html"),
     },
-  },
+    {
+      el: "#template-shadow",
+      template: await fetching("components/ajax-get.js.html"),
+      shadowDOM: true,
+    },
+    {
+      el: "#template-no-shadow",
+      template: await fetching("components/ajax-get.js.html"),
+      shadowDOM: false,
+    },
+    {
+      el: "#in-place-template",
+      shadowDOM: false,
+    },
+  ],
   {
-    template: await fetching("components/ajax-get.js.html"),
-    el: "#app",
     data: { activity: {} },
-    shadowDOM: true,
     async created() {
       const url = "https://www.boredapi.com/api/activity";
       const activity = await fetching(url);
       this.data.activity = activity;
     },
-  },
-]);
+  }
+);

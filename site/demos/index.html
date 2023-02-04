@@ -4,24 +4,41 @@
   <script type="module" src="ajax-get.js"></script>
   <style>
     body {
-      color: red;
+      color: grey;
     }
 
-    /* ajax-get {
+    ajax-get {
       color: blue;
-    } */
-
-    /* [hidden] {
-      visibility: hidden !important;
-    } */
+    }
   </style>
 </head>
 
 <body>
-  <ajax-get url="https://www.boredapi.com/api/activity" style="visibility: hidden"></ajax-get>
+  <ajax-get url="https://www.boredapi.com/api/activity"></ajax-get>
 
-  <div id="app" url="https://www.boredapi.com/api/activity" style="visibility: hidden">
-    More stuff here
+  <template id="template-shadow" style="color: purple;">
+    I am the shadow
+  </template>
+
+  <template id="template-no-shadow" style="color: pink;">
+    I am not the shadow
+  </template>
+
+  <template id="in-place-template">
+    <h1>{this.prop.url ? this.prop.url : 'https://www.boredapi.com/api/activity'}</h1>
+    <div>
+      <h2>{this.activity.activity}</h2>
+      <ul>
+        <li>Type: {this.activity.type}</li>
+        <li>Price: {this.activity.price}</li>
+        <li>Accessibility: {this.activity.accessibility}</li>
+        <li>Participants: {this.activity.participants}</li>
+      </ul>
+    </div>
+  </template>
+
+  <div>
+    Not a template
   </div>
 </body>
 

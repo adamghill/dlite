@@ -21,8 +21,8 @@ Access `data` in HTML templates via `this.{data-property-name}`.
   });
 </script>
 
-<div id="app">
+<template id="app">
   <p>Hello {this.name}</p>
   <p>Date: {this.todaysDate}</p>
-</div>
+</template>
 ```

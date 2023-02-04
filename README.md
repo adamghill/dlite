@@ -76,14 +76,14 @@ An example counter component to give you a sense of what `dlite` looks like. Man
   });
 </script>
 
-<div id="app">
+<template id="app">
   <h1>{this.count}</h1>
 
   <div>
     <button @click="down">Decrease Count</button>
     <button @click="up">Increase Count</button>
   </div>
-</div>
+</template>
 ```
 
 More examples at https://dlitejs.com.

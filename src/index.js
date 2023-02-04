@@ -9,7 +9,7 @@ const error = (msg) => {
  * Generate random custom element tag
  * @returns {string}
  */
-const genRandomCustomElementTagName = () => {
+const getRandomCustomElementTagName = () => {
   return `dlite-${randomChars()}`;
 };
 
@@ -59,11 +59,16 @@ function Dlite(options) {
     ...options,
   };
 
-  const hasTagName = !!opt.tagName;
-  opt.tagName = opt.tagName || genRandomCustomElementTagName();
+  const shouldCreateTag = !opt.tagName;
+  opt.tagName = opt.tagName || getRandomCustomElementTagName();
 
   if (opt.el) {
     let el = selector(opt.el);
+
+    if (!el) {
+      console.error(`'${opt.el}' is not valid element.`);
+      return;
+    }
 
     if (!opt.template) {
       opt.template = el.innerHTML;
@@ -71,14 +76,18 @@ function Dlite(options) {
 
     el.innerHTML = "";
 
-    if (!hasTagName) {
-      const tagEl = document.createElement(opt.tagName);
+    if (shouldCreateTag) {
+      const createdEl = document.createElement(opt.tagName);
+
+      // Set style from original element on new element
+      // TODO: Should other attributes carry over?
+      createdEl.style = el.getAttribute("style");
 
       if (opt.refId) {
-        tagEl.setAttribute("ref-id", opt.refId);
+        createdEl.setAttribute("ref-id", opt.refId);
       }
 
-      el.parentNode.replaceChild(tagEl, el);
+      el.parentNode.replaceChild(createdEl, el);
     }
   }
 

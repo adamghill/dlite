@@ -1,3 +1,9 @@
+# 0.14.0
+- Prevent flickering when rendering for all component types (`tagName`, `el`, and in-place elements)
+- Attaching components to a `Shadow DOM` is now the default; this will be useful for encapsulation and scoped styles in the future
+- Set styles on custom element when on an initial `el`
+- Add demo for how to use shared component template
+
 # 0.13.1
 - Remove unnecessary files
 
@@ -19,7 +25,7 @@
 - fixed removal of visibility/display if it exist in el to prevent flickering of placeholders
 
 # 0.11.0
-- Rename reliftHTML to Litedom
+- Rename `reliftHTML` to `Litedom`
 - Directives use color, instead of r-*. :for, :if, :else, :class, :key
 - Remove r-* directives
 - Added :class

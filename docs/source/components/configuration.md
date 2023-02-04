@@ -47,7 +47,7 @@ Required for [in-place elements](components/index.md#in-place-element).
 Name for the [custom element](components/index.md#custom-element). 
 
 ```{note}
-Custom element names must contain a hyphen. `my-counter` will be used as `<my-counter></my-counter>`
+Custom element names **must** contain a hyphen. `my-counter` will be used as `<my-counter></my-counter>`
 ```
 
 Required for [custom elements](components/index.md#custom-element).
@@ -93,14 +93,14 @@ You cannot access the computed data as functions in your code.
 You cannot mutate the state or access custom methods in the computed data function.
 ```
 
-### `shadowDOM`
-[`boolean`: `false`]
-
-By default components are created as normal `Custom Element`s. To set the `Web Component` to use the Shadow DOM, set this to `true`.
-
 ### [`$store`](store.md)
 
 A shared store manager, i.e. `reStated`, `Redux`, [Litestate](https://github.com/mardix/litestate). The store instance must have `getState` and `subscribe` functions. 
+
+### `shadowDOM`
+[`boolean`: `true`]
+
+By default components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components). By default the `Custom Element` is also attached to a `Shadow DOM` to help encapsulate it from the regular DOM. For advanced cases, you can prevent the use of the `Shadow DOM` by setting set this to `false`.
 
 ## Methods
 

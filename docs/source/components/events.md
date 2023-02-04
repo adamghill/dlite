@@ -20,9 +20,9 @@ The attribute must be the name of the event without `on`, e.g. `@click` will lis
 
 </script>
 
-<div id="app">
+<template id="app">
   <a href="#" @click="sayHello">Prints 'Say Hello!' to the console</a>
-</div>
+</template>
 :::
 
 ## Passing values
@@ -44,11 +44,11 @@ Use HTML data attributes to pass data to the event.
   })
 </script>
 
-<div id="app">
+<template id="app">
   <button @click="sayHello" data-name="Mardix">
     Prints 'Hello Mardix!' to the console
   </button>
-</div>
+</template>
 :::
 
 ## @call

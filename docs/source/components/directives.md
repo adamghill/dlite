@@ -35,12 +35,12 @@ The element with the `:else` must immediately follow the element with the `:if` 
   });
 </script>
 
-<div id="app">
+<template id="app">
   <div :if="this.count !== 5">The count is not {this.count}</div>
 
   <div :if="this.show">this.data.show is true</div>
   <div :else>this.data.show is false</div>
-</div>
+</template>
 ```
 
 ## for
@@ -78,11 +78,11 @@ It is recommended to provide a `:key` directive or `id` attribute with `:for` wh
   });
 </script>
 
-<div id="app">
+<template id="app">
   <ul>
     <li :for="location, index in this.locations" :key="location-{index}">{location.name}</li>
   </ul>
-</div>
+</template>
 ```
 
 ```html
@@ -117,7 +117,7 @@ It is recommended to provide a `:key` directive or `id` attribute with `:for` wh
   });
 </script>
 
-<div id="app">
+<template id="app">
   <ul>
     <li :for="state in this.states">
       <p>
@@ -130,7 +130,7 @@ It is recommended to provide a `:key` directive or `id` attribute with `:for` wh
       </ul>
     </li>
   </ul>
-</div>
+</template>
 ```
 
 ## class
