@@ -1,3 +1,8 @@
+/**
+ * @vitest-environment jsdom
+ */
+
+import { describe, test, expect } from "vitest";
 import { bindEvents, tokenizeEvents } from "../src/events.js";
 
 // require('jsdom-global')();

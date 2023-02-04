@@ -7,8 +7,20 @@
   "description": "A tiny, blazing fast view library that creates reactive Web Components.",
   "main": "dist/dlite.es.js",
   "module": "dist/dlite.es.js",
-  "files": ["dist", "src", "docs/source"],
-  "keywords": ["reactive", "bind", "view", "templating", "directives", "dom"],
+  "type": "module",
+  "files": [
+    "dist",
+    "src",
+    "docs/source"
+  ],
+  "keywords": [
+    "reactive",
+    "bind",
+    "view",
+    "templating",
+    "directives",
+    "dom"
+  ],
   "scripts": {
     "size": "gzip-size ./dist/dlite.es.js",
     "ts": "tsc",
@@ -19,7 +31,7 @@
     "build": "rollup -c",
     "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
     "publish": "npm run t && npm run build && npm run commit-publish-tag && npm publish && npm run size",
-    "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=. dev-server",
+    "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=site dev-server",
     "sb": "poetry run sphinx-build -W -b dirhtml docs/source docs/build && rsync -a --exclude='.*/' --exclude='_sources/' docs/build/ site/",
     "sa": "poetry run sphinx-autobuild -W b dirhtml docs/source docs/build"
   },
@@ -37,16 +49,18 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "babel-plugin-rewire": "^1.2.0",
     "cross-var": "^1.1.0",
     "gh-pages": "^2.0.1",
     "gzip-size-cli": "^3.0.0",
-    "jest": "^24.6.0",
-    "jsdom": "^15.0.0",
+    "jsdom": "^21.1.0",
     "mutationobserver-shim": "^0.3.3",
-    "rollup": "^1.8.0",
-    "rollup-plugin-banner": "^0.2.0",
-    "rollup-plugin-terser": "^4.0.4",
-    "typescript": "^4.9.4"
+    "rollup": "^3.13.0",
+    "rollup-plugin-banner2": "^1.2.2",
+    "@rollup/plugin-terser": "^0.4.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.1",
+    "vitest": "^0.28.4"
+  },
+  "dependencies": {
   }
 }

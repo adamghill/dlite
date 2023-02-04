@@ -1,3 +1,4 @@
+import { test, expect } from "vitest";
 import { objectOnChange } from "../src/utils.js";
 
 test("set new property", () => {
@@ -21,14 +22,16 @@ test("get ___target___ #", () => {
   expect(data["#"]).toEqual({ name: "Litedom" });
 });
 
-test("objectOnChange callback function", (done) => {
-  const initialData = {};
-  const data = objectOnChange(initialData, () => {
-    expect(data.name).toBe("Litedom");
-    done();
-  });
-  data.name = "Litedom";
-});
+test("objectOnChange callback function", () =>
+  new Promise((done) => {
+    const initialData = {};
+    const data = objectOnChange(initialData, () => {
+      expect(data.name).toBe("Litedom");
+      done();
+    });
+
+    data.name = "Litedom";
+  }));
 
 test("with array", () => {
   const initialData = {

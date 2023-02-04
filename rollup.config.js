@@ -10,16 +10,10 @@
  * run
  * > rollup -c
  */
-import banner from "rollup-plugin-banner";
-const terser = require("rollup-plugin-terser");
-const pkg = require("./package.json");
 
-const topBanner = `${pkg.pkgName} v${pkg.version} 
-Copyright ${new Date().getFullYear()} adamghill
-License: MIT
-${pkg.homepage}
-Build date: ${new Date().toLocaleString()}
-`;
+import banner2 from "rollup-plugin-banner2";
+import terser from "@rollup/plugin-terser";
+import pkg from "./package.json" assert { type: "json" };
 
 export default {
   input: "./src/index.js",
@@ -27,5 +21,11 @@ export default {
     file: `./dist/${pkg.name}.es.js`,
     format: "esm",
   },
-  plugins: [terser.terser(), banner(topBanner)],
+  plugins: [
+    terser(),
+    banner2(
+      () => `/* ${pkg.name} v${pkg.version} */
+`
+    ),
+  ],
 };
