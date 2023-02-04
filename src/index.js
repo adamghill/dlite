@@ -18,95 +18,96 @@ const getRandomCustomElementTagName = () => {
  * @param {object} options the configuration
  */
 function Dlite(options) {
-  const opt = {
+  const configuration = {
     /**
      * el
      * @type {HTMLElement | string}
-     * The target element for inplace element where it will be displayed at.
-     * If $template is omitted or null, it will use the el#innerHTML as template.
-     * To select in-place element, provide $refId which can be retrieved using
-     * document.querySelector('[ref-id="the-refId-provided"]')
-     * */
+     * Element or query selector where the in-place element will be rendered.
+     * If $template is `null`, it will use the el#innerHTML as template.
+     */
     el: null,
+
     /**
      * refId
      * @type {string | null}
-     * A unique identifier to allow us to select the in-place element.
-     * Only when using $el for in-place element. Custom element won't have it
-     * To select in-place element, provide $refId which can be retrieve using
-     * document.querySelector('[ref-id="the-refId-provided"]')
-     *  */
+     * A unique identifier to select an in-place element.
+     */
     refId: null,
+
     /**
      * template
      * @type {string}
-     * the template is the template string to use to create the component.
-     * If it exists along with $el, $el will be the target, but it will use $template as template
-     * This take precedence over $el#innerHTML
-     * Omit $template to use $el#innerHTML as template*/
+     * Template string used to create the component.
+     * If it is set with `el`, `el` will be the target, but `template` will override its `innerHTML`.
+     */
     template: null,
+
     /**
      * tagName
      * @type {string}
-     * The tagname leave as null for in-place element.
-     * A string for custom element */
+     * The tag name for the custom element. Not needed for in-place element.
+     */
     tagName: null,
+
     /**
      * shadowDOM
      * @type {boolean}
-     * To indicate this element is self-contained as shadow dom */
-    shadowDOM: false,
+     * Attach the `Custom Element` to a `Shadow DOM`. Defaults to `true`.
+     */
+    shadowDOM: true,
+
     ...options,
   };
 
-  const shouldCreateTag = !opt.tagName;
-  opt.tagName = opt.tagName || getRandomCustomElementTagName();
+  const shouldCreateTag = !configuration.tagName;
+  configuration.tagName =
+    configuration.tagName || getRandomCustomElementTagName();
 
-  if (opt.el) {
-    let el = selector(opt.el);
+  if (configuration.el) {
+    let el = selector(configuration.el);
 
     if (!el) {
-      console.error(`'${opt.el}' is not valid element.`);
+      console.error(`'${configuration.el}' is not valid element.`);
       return;
     }
 
-    if (!opt.template) {
-      opt.template = el.innerHTML;
+    if (!configuration.template) {
+      configuration.template = el.innerHTML;
     }
 
     el.innerHTML = "";
 
     if (shouldCreateTag) {
-      const createdEl = document.createElement(opt.tagName);
+      const createdEl = document.createElement(configuration.tagName);
 
       // Set style from original element on new element
       // TODO: Should other attributes carry over?
       createdEl.style = el.getAttribute("style");
 
-      if (opt.refId) {
-        createdEl.setAttribute("ref-id", opt.refId);
+      if (configuration.refId) {
+        createdEl.setAttribute("ref-id", configuration.refId);
       }
 
       el.parentNode.replaceChild(createdEl, el);
     }
   }
 
-  if (!opt.template) {
+  if (!configuration.template) {
     throw error(`Missing 'template' option or 'el' is not valid element.`);
   }
 
-  Component(opt);
+  Component(configuration);
 }
 
 /**
  *
- * @param {object|array} options, config object of dlite options or array of options
- * @param {object} sharedOptions, to share global options, ie: $store, $router, $events
+ * @param {object|array} configuration, `dlite` configuration or array of configurations
+ * @param {object} sharedConfiguration, shared global configurations fo reach component; only used with array of configurations
  */
-export default (options, sharedOptions = {}) => {
-  if (Array.isArray(options)) {
-    options.map((o) => Dlite({ ...sharedOptions, ...o }));
+export default (configuration, sharedConfiguration = {}) => {
+  if (Array.isArray(configuration)) {
+    configuration.map((o) => Dlite({ ...sharedConfiguration, ...o }));
   } else {
-    Dlite(options);
+    Dlite(configuration);
   }
 };
