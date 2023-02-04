@@ -253,56 +253,86 @@ export const objectOnChange = (object, onChange) => {
   const propCache = new WeakMap();
 
   const handleChange = () => {
-    if (!inApply) onChange();
-    else if (!changed) changed = true;
+    if (!inApply) {
+      onChange();
+    } else if (!changed) {
+      changed = true;
+    }
   };
 
   const getOwnPropertyDescriptor = (target, property) => {
     let props = propCache.get(target);
-    if (props) return props;
+
+    if (props) {
+      return props;
+    }
 
     props = new Map();
     propCache.set(target, props);
 
     let prop = props.get(property);
+
     if (!prop) {
       prop = Reflect.getOwnPropertyDescriptor(target, property);
       props.set(property, prop);
     }
+
     return prop;
   };
 
   const handler = {
     get(target, property, receiver) {
-      if (property === proxyTarget) return target;
+      if (property === proxyTarget) {
+        return target;
+      }
+
       const value = Reflect.get(target, property, receiver);
-      if (isPrimitive(value) || property === "constructor") return value;
+
+      if (isPrimitive(value) || property === "constructor") {
+        return value;
+      }
 
       const descriptor = getOwnPropertyDescriptor(target, property);
+
       if (descriptor && !descriptor.configurable) {
-        if (descriptor.set && !descriptor.get) return undefined;
-        if (descriptor.writable === false) return value;
+        if (descriptor.set && !descriptor.get) {
+          return undefined;
+        }
+
+        if (descriptor.writable === false) {
+          return value;
+        }
       }
+
       return new Proxy(value, handler);
     },
 
     set(target, property, value, receiver) {
-      if (value && value[proxyTarget] !== undefined) value = value[proxyTarget];
+      if (value && value[proxyTarget] !== undefined) {
+        value = value[proxyTarget];
+      }
+
       const previous = Reflect.get(target, property, receiver);
       const result = Reflect.set(target, property, value);
-      if (previous !== value) handleChange();
+
+      if (previous !== value) {
+        handleChange();
+      }
+
       return result;
     },
 
     defineProperty(target, property, descriptor) {
       const result = Reflect.defineProperty(target, property, descriptor);
       handleChange();
+
       return result;
     },
 
     deleteProperty(target, property) {
       const result = Reflect.deleteProperty(target, property);
       handleChange();
+
       return result;
     },
 
@@ -310,10 +340,16 @@ export const objectOnChange = (object, onChange) => {
       if (!inApply) {
         inApply = true;
         const result = Reflect.apply(target, thisArg, argumentsList);
-        if (changed) onChange();
+
+        if (changed) {
+          onChange();
+        }
+
         inApply = changed = false;
+
         return result;
       }
+
       return Reflect.apply(target, thisArg, argumentsList);
     },
   };
@@ -336,8 +372,9 @@ function deepCopy(obj) {
   var temp = obj.constructor();
 
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key))
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
       temp[key] = immu(obj[key]);
+    }
   }
 
   return temp;

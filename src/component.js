@@ -94,7 +94,7 @@ export default function Component(options = {}) {
     class extends HTMLElement {
       constructor() {
         super();
-        // with Shadow dom or leave as CUSTOM ELEMENT
+        // with Shadow dom or leave as `Custom Element`
         /**
          * @type {Element|ShadowRoot}
          * use a custom element or shadow dom */
