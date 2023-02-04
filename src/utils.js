@@ -96,15 +96,6 @@ export const isElement = (obj) => {
 };
 
 /**
- * Return a HTMLElement
- * @param {any} el
- * @returns {HTMLElement}
- */
-export const selector = (el) => {
-  return typeof el === "string" ? document.querySelector(el) : el;
-};
-
-/**
  * Turn an HTML string into HTMLElement
  * @param {string} html
  * @returns {HTMLElement}

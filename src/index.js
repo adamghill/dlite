@@ -1,5 +1,5 @@
 import Component from "./component.js";
-import { randomChars, selector } from "./utils.js";
+import { randomChars } from "./utils.js";
 
 const error = (msg) => {
   new Error(`dlite error: ${msg}`);
@@ -64,7 +64,10 @@ function Dlite(options) {
     configuration.tagName || getRandomCustomElementTagName();
 
   if (configuration.el) {
-    let el = selector(configuration.el);
+    let el =
+      typeof configuration.el === "string"
+        ? document.querySelector(configuration.el)
+        : configuration.el;
 
     if (!el) {
       console.error(`'${configuration.el}' is not valid element.`);
