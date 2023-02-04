@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex/" /><link rel="search" title="Search" href="../search/" /><link rel="next" title="Configuration" href="configuration/" /><link rel="prev" title="Examples" href="../examples/" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>Initialize - dlite 0.13.1 documentation</title>
+        <title>Initialize - dlite 0.14.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
@@ -124,7 +124,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../"><div class="brand">dlite 0.13.1 documentation</div></a>
+      <a href="../"><div class="brand">dlite 0.14.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -147,7 +147,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../">
   
   
-  <span class="sidebar-brand-text">dlite 0.13.1 documentation</span>
+  <span class="sidebar-brand-text">dlite 0.14.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search/" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -211,15 +211,16 @@
         <article role="main">
           <section id="initialize">
 <h1>Initialize<a class="headerlink" href="#initialize" title="Permalink to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">dlite</span></code> turns HTML into composable, fully compliant <code class="docutils literal notranslate"><span class="pre">Web</span> <span class="pre">Component</span></code>s. The easiest way to initialize <code class="docutils literal notranslate"><span class="pre">dlite</span></code> is via <code class="docutils literal notranslate"><span class="pre">ES</span> <span class="pre">Modules</span></code>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">dlite</span></code> turns HTML into composable, fully compliant <code class="docutils literal notranslate"><span class="pre">Web</span> <span class="pre">Component</span></code>s. The easiest way to initialize <code class="docutils literal notranslate"><span class="pre">dlite</span></code> is via an <code class="docutils literal notranslate"><span class="pre">ES</span> <span class="pre">Module</span></code> import.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Make sure to specify <code class="docutils literal notranslate"><span class="pre">module</span></code> for the <code class="docutils literal notranslate"><span class="pre">script</span></code> element’s <code class="docutils literal notranslate"><span class="pre">type</span></code> attribute.</p>
 </div>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
 <span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
 
-<span class="w">  </span><span class="nx">Dlite</span><span class="p">({});</span>
+<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">componentOptions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{};</span>
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">(</span><span class="nx">componentOptions</span><span class="p">);</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -242,18 +243,41 @@
 <section id="array-of-objects">
 <h3>Array of objects<a class="headerlink" href="#array-of-objects" title="Permalink to this heading">#</a></h3>
 <p>Initializes multiple components at once.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">componentOne</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-one&#39;</span>
-<span class="w">  </span><span class="p">};</span>
-<span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">componentTwo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-two&#39;</span>
-<span class="w">  </span><span class="p">};</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">componentOne</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-one&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">componentTwo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-two&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
+<span class="p">};</span>
 
-<span class="w">  </span><span class="nx">Dlite</span><span class="p">([</span><span class="nx">componentOne</span><span class="p">,</span><span class="w"> </span><span class="nx">componentTwo</span><span class="p">]);</span>
+<span class="nx">Dlite</span><span class="p">([</span><span class="nx">componentOne</span><span class="p">,</span><span class="w"> </span><span class="nx">componentTwo</span><span class="p">]);</span>
 </pre></div>
 </div>
+<section id="shared-configuration">
+<h4>Shared configuration<a class="headerlink" href="#shared-configuration" title="Permalink to this heading">#</a></h4>
+<p>When using an array of configuration objects, a shared configuration object can also be passed-in.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span><span class="w"> </span><span class="nx">componentOne</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-one&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">componentTwo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;component-two&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;...&#39;</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="nx">Dlite</span><span class="p">([</span>
+<span class="w">  </span><span class="nx">componentOne</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">componentTwo</span><span class="p">,</span>
+<span class="p">],</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">created</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`This will log when each component gets created`</span><span class="p">);</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="custom-element">
@@ -282,8 +306,8 @@
 </section>
 <section id="in-place-element">
 <h2>In-place element<a class="headerlink" href="#in-place-element" title="Permalink to this heading">#</a></h2>
-<p>Use an existing DOM element and make it reactive. It is not intended to be reused.</p>
-<p>Requires an <code class="docutils literal notranslate"><span class="pre">el</span></code> to be set in the configuration.</p>
+<p>Use an existing DOM element and make it reactive.</p>
+<p>Requires <code class="docutils literal notranslate"><span class="pre">el</span></code>, a query selector, in the configuration to find an element in the HTML.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
 <span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
 
@@ -295,12 +319,53 @@
 <span class="w">  </span><span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 
-<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
   <span class="cm">&lt;!-- Hello World --&gt;</span>
   Hello {this.world}
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Setting a <code class="docutils literal notranslate"><span class="pre">template</span></code> key with the <code class="docutils literal notranslate"><span class="pre">el</span></code> will always override the <code class="docutils literal notranslate"><span class="pre">innerHTML</span></code> of the selected element.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`See ya {this.world}`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+  <span class="cm">&lt;!-- See ya World --&gt;</span>
+  Hello {this.world}
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<section id="prevent-flickering">
+<h3>Prevent flickering<a class="headerlink" href="#prevent-flickering" title="Permalink to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">template</span></code> tags are not rendered by browsers normally, so they are useful to prevent the flickering effect when an element is initially rendered before it is merged with the data.</p>
+<p>If another element tag other than <code class="docutils literal notranslate"><span class="pre">template</span></code> must be used, either add a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/hidden"><code class="docutils literal notranslate"><span class="pre">hidden</span></code> attribute</a> to the element or <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/CSS/visibility"><code class="docutils literal notranslate"><span class="pre">style=&quot;visibility:</span> <span class="pre">hidden&quot;</span></code></a>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">hidden</span></code> attribute will make the component invisible and will not include it in the layout. It is basically the same as doing a <code class="docutils literal notranslate"><span class="pre">display:</span> <span class="pre">none</span></code> style.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- `hidden` attribute  --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span> <span class="na">hidden</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello {this.name}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">visibility:</span> <span class="pre">hidden</span></code> style will make the component invisible, but will still affect the layout – this is beneficial to prevent elements from shifting as much. This is what <code class="docutils literal notranslate"><span class="pre">dlite</span></code> does by default when rendering non in-place elements.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cm">&lt;!-- `visibility: hidden` style --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;visibility: hidden&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello {this.name}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -362,11 +427,17 @@
 <li><a class="reference internal" href="#">Initialize</a><ul>
 <li><a class="reference internal" href="#configuration">Configuration</a><ul>
 <li><a class="reference internal" href="#object">Object</a></li>
-<li><a class="reference internal" href="#array-of-objects">Array of objects</a></li>
+<li><a class="reference internal" href="#array-of-objects">Array of objects</a><ul>
+<li><a class="reference internal" href="#shared-configuration">Shared configuration</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#custom-element">Custom element</a></li>
-<li><a class="reference internal" href="#in-place-element">In-place element</a></li>
+<li><a class="reference internal" href="#in-place-element">In-place element</a><ul>
+<li><a class="reference internal" href="#prevent-flickering">Prevent flickering</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

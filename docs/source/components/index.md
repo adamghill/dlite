@@ -148,7 +148,7 @@ Setting a `template` key with the `el` will always override the `innerHTML` of t
 ```
 ````
 
-#### Prevent flickering
+### Prevent flickering
 
 `template` tags are not rendered by browsers normally, so they are useful to prevent the flickering effect when an element is initially rendered before it is merged with the data.
 
