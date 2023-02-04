@@ -24,9 +24,8 @@
   "scripts": {
     "size": "gzip-size ./dist/dlite.es.js",
     "ts": "tsc",
-    "t": "jest",
-    "tv": "jest --verbose",
-    "tw": "jest --watch",
+    "t": "vitest run",
+    "tw": "vitest",
     "b": "npm run build && stat -f%z dist/dlite.es.js | numfmt --to=iec --suffix=B --format='%.2f' && gzip-size ./dist/dlite.es.js",
     "build": "rollup -c",
     "commit-publish-tag": "cross-var git commit -am '$npm_package_version' && git tag $npm_package_version && git push && git push --tags",
