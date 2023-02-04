@@ -1,6 +1,8 @@
 # Introduction
 
-`dlite` creates `Web Components` and interactive web pages easily without the bloat of big frameworks. It can be effortlessly added into existing HTML pages to create reusable components for web applications. `dlite` is perfect for simple, but dynamic static sites or when you want to progressively upgrade a site without changing too much.
+`dlite` creates `Web Components` and interactive web pages easily without the bloat of big frameworks. It can be effortlessly added into existing HTML pages to create reusable components for web applications. `dlite` is perfect for simple, but dynamic static sites or when you want to progressively enhance a site without changing too much HTML.
+
+The [code](https://github.com/adamghill/dlite) is licensed as MIT. PRs and bug reports with failing tests are extremely appreciated.
 
 ## ⭐ Features
 
