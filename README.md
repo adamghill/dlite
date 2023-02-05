@@ -16,7 +16,7 @@ https://dlitejs.com
 
 ## ⭐ Features
 
-- Seriously tiny: **<4 kB** when gzipped
+- Seriously tiny: **<10 kB** (**<4 kB** when gzipped)
 - Reactive Web Components
 - Internal state manager
 - Progressive template language that leverages `template literals`
@@ -93,7 +93,7 @@ More examples at https://dlitejs.com.
 
 ### How big is `dlite`?
 
-`dlite` is **<4 kB** when gzipped.
+`dlite` is **<10 kB** (**<4 kB** when gzipped) and no dependencies.
 
 ### Why yet another JavaScript library?
 

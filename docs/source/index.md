@@ -6,7 +6,7 @@ The [code](https://github.com/adamghill/dlite) is licensed as MIT. PRs and bug r
 
 ## ⭐ Features
 
-- Seriously tiny: **<4 kB** when gzipped
+- Seriously tiny: **<10 kB** (**<4 kB** when gzipped)
 - Reactive web components
 - Internal state manager
 - Progressive template language that leverages `template literals`
