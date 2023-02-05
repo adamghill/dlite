@@ -52,9 +52,9 @@ function Dlite(options) {
     /**
      * shadowDOM
      * @type {boolean}
-     * Attach the `Custom Element` to a `Shadow DOM`. Defaults to `true`.
+     * Attach the `Custom Element` to a `Shadow DOM`. Defaults to `false`.
      */
-    shadowDOM: true,
+    shadowDOM: false,
 
     ...options,
   };

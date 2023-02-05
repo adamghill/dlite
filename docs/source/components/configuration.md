@@ -8,10 +8,12 @@ A configuration with examples for all possible properties.
   tagName: 'hello-world',
   template: `Hello {this.world} {this.prop.name}!`,
   shadowDOM: false,
+  refId: "app",
   $store: Litestate(),
   data: {
     world: 'World',
     helloWorld(state) {
+      // computed data
       return `Hello {this.data.world}!`;
     }
   },
@@ -25,6 +27,7 @@ A configuration with examples for all possible properties.
     console.log(`Component removed: ${this.el}`);
   },
   sayHello(name) {
+    // custom method
     console.log(`Hello ${name}`);
   },
 }
@@ -98,9 +101,30 @@ You cannot mutate the state or access custom methods in the computed data functi
 A shared store manager, i.e. `reStated`, `Redux`, [Litestate](https://github.com/mardix/litestate). The store instance must have `getState` and `subscribe` functions. 
 
 ### `shadowDOM`
-[`boolean`: `true`]
+[`boolean`: `false`]
 
-By default components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components). By default the `Custom Element` is also attached to a `Shadow DOM` to help encapsulate it from the regular DOM. For advanced cases, you can prevent the use of the `Shadow DOM` by setting set this to `false`.
+By default components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components). The `Custom Element` can be attached to a `Shadow DOM` to help encapsulate it by setting this property to `true`. Being attached to a `Shadow DOM` will prevent JavaScript from accessing the internal elements of the component or being affected by normal CSS styles.
+
+### `refId`
+[`string`]
+
+An identifier for an [in-place element](components/index.md#in-place-element) so it can accessed externally by JavaScript while in `Shadow DOM` mode.
+
+```js
+// If the `refId` was set to "app" it cna be retrieved via `querySelector`
+let component = document.querySelector('[ref-id="app"]');
+let value = component.$root.querySelector("#textbox").value;
+```
+
+````{note}
+If you want to access an element in the component from inside the component, you do not need to set a `refId`. `this.el` can be used instead.
+
+```js
+updated() {
+  console.log(`The value of an input is: ${this.el.querySelector('#textbox').value}`);
+},
+```
+````
 
 ## Methods
 
@@ -171,7 +195,7 @@ Whenever `data` is updated it will re-render the DOM if necessary.
 
 #### `this.prop`
 
-Props are the attributes of the custom element.
+The attributes of the custom element.
 
 ```html
 <script type="module">

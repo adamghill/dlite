@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Template" href="../template/" /><link rel="prev" title="Initialize" href="../" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>Configuration - dlite 0.14.0 documentation</title>
+        <title>Configuration - dlite 0.15.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -124,7 +124,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../"><div class="brand">dlite 0.14.0 documentation</div></a>
+      <a href="../../"><div class="brand">dlite 0.15.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -147,7 +147,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../">
   
   
-  <span class="sidebar-brand-text">dlite 0.14.0 documentation</span>
+  <span class="sidebar-brand-text">dlite 0.15.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search/" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -217,10 +217,12 @@
 <span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world} {this.prop.name}!`</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">shadowDOM</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">refId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;app&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">$store</span><span class="o">:</span><span class="w"> </span><span class="nx">Litestate</span><span class="p">(),</span>
 <span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
 <span class="w">    </span><span class="nx">helloWorld</span><span class="p">(</span><span class="nx">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="c1">// computed data</span>
 <span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="sb">`Hello {this.data.world}!`</span><span class="p">;</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
@@ -234,6 +236,7 @@
 <span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Component removed: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="nx">sayHello</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// custom method</span>
 <span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Hello </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="p">}</span>
@@ -301,8 +304,27 @@
 </section>
 <section id="shadowdom">
 <h3><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code><a class="headerlink" href="#shadowdom" title="Permalink to this heading">#</a></h3>
-<p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p>
-<p>By default components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a>. By default the <code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code> is also attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it from the regular DOM. For advanced cases, you can prevent the use of the <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> by setting set this to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p>
+<p>By default components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code> can be attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it by setting this property to <code class="docutils literal notranslate"><span class="pre">true</span></code>. Being attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> will prevent JavaScript from accessing the internal elements of the component or being affected by normal CSS styles.</p>
+</section>
+<section id="refid">
+<h3><code class="docutils literal notranslate"><span class="pre">refId</span></code><a class="headerlink" href="#refid" title="Permalink to this heading">#</a></h3>
+<p>[<code class="docutils literal notranslate"><span class="pre">string</span></code>]</p>
+<p>An identifier for an <a class="reference internal" href="../#in-place-element"><span class="std std-ref">in-place element</span></a> so it can accessed externally by JavaScript while in <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> mode.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="c1">// If the `refId` was set to &quot;app&quot; it cna be retrieved via `querySelector`</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[ref-id=&quot;app&quot;]&#39;</span><span class="p">);</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="nx">$root</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#textbox&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to access an element in the component from inside the component, you do not need to set a <code class="docutils literal notranslate"><span class="pre">refId</span></code>. <code class="docutils literal notranslate"><span class="pre">this.el</span></code> can be used instead.</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">updated</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The value of an input is: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#textbox&#39;</span><span class="p">).</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">},</span>
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 <section id="methods">
@@ -372,7 +394,7 @@
 </section>
 <section id="this-prop">
 <h4><code class="docutils literal notranslate"><span class="pre">this.prop</span></code><a class="headerlink" href="#this-prop" title="Permalink to this heading">#</a></h4>
-<p>Props are the attributes of the custom element.</p>
+<p>The attributes of the custom element.</p>
 <div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
 <span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
 
@@ -466,6 +488,7 @@
 </li>
 <li><a class="reference internal" href="#store"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">$store</span></code></span></a></li>
 <li><a class="reference internal" href="#shadowdom"><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code></a></li>
+<li><a class="reference internal" href="#refid"><code class="docutils literal notranslate"><span class="pre">refId</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#methods">Methods</a><ul>

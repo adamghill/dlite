@@ -1,3 +1,6 @@
+# 0.15.0
+- Revert `shadowDOM` default back to `false` since that will be less disruptive and a better first experience
+
 # 0.14.0
 - Prevent flickering when rendering for all component types (`tagName`, `el`, and in-place elements)
 - Attaching components to a `Shadow DOM` is now the default; this will be useful for encapsulation and scoped styles in the future

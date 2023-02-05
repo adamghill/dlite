@@ -6,12 +6,12 @@ The [code](https://github.com/adamghill/dlite) is licensed as MIT. PRs and bug r
 
 ## ⭐ Features
 
-- Seriously tiny: **~3.5kb** when gzipped
+- Seriously tiny: **~3.6kB** when gzipped
 - Reactive web components
 - Internal state manager
 - Progressive template language that leverages `template literals`
-- Props
-- Lifecycle
+- Props support
+- Lifecycle methods
 - State management
 - Computed properties
 - One-way data flow
@@ -19,6 +19,7 @@ The [code](https://github.com/adamghill/dlite) is licensed as MIT. PRs and bug r
 - Events handling
 - Component lifecycle hooks
 - Directives (e.g. `if`/`else`, `for`, `style`, `class`)
+- Can attach to a Shadow DOM
 - No dependencies, no virtual DOM, no JSX, and no build tool required
 - Put a script tag in your HTML and _go_ ⚡
 

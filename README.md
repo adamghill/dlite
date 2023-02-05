@@ -16,12 +16,12 @@ https://dlitejs.com
 
 ## ⭐ Features
 
-- Seriously tiny: **~3.5kb** when gzipped
-- Reactive web components
+- Seriously tiny: **~3.5kB** when gzipped
+- Reactive Web Components
 - Internal state manager
 - Progressive template language that leverages `template literals`
-- Props
-- Lifecycle
+- Props support
+- Lifecycle methods
 - State management
 - Computed properties
 - One-way data flow
@@ -29,6 +29,7 @@ https://dlitejs.com
 - Events handling
 - Component lifecycle hooks
 - Directives (e.g. `if`/`else`, `for`, `style`, `class`)
+- Can attach to a Shadow DOM
 - No dependencies, no virtual DOM, no JSX, and no build tool required
 - Put a script tag in your HTML and _go_ ⚡
 
