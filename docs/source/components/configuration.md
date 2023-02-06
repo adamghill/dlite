@@ -105,27 +105,6 @@ A shared store manager, i.e. `reStated`, `Redux`, [Litestate](https://github.com
 
 By default components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components). The `Custom Element` can be attached to a `Shadow DOM` to help encapsulate it by setting this property to `true`. Being attached to a `Shadow DOM` will prevent JavaScript from accessing the internal elements of the component or being affected by normal CSS styles.
 
-### `refId`
-[`string`]
-
-An identifier for an [in-place element](components/index.md#in-place-element) so it can accessed externally by JavaScript while in `Shadow DOM` mode.
-
-```js
-// If the `refId` was set to "app" it cna be retrieved via `querySelector`
-let component = document.querySelector('[ref-id="app"]');
-let value = component.$root.querySelector("#textbox").value;
-```
-
-````{note}
-If you want to access an element in the component from inside the component, you do not need to set a `refId`. `this.el` can be used instead.
-
-```js
-updated() {
-  console.log(`The value of an input is: ${this.el.querySelector('#textbox').value}`);
-},
-```
-````
-
 ## Methods
 
 ### Lifecycle methods

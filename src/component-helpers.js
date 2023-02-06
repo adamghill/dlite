@@ -57,7 +57,7 @@ export const filterInitialState = (obj) => {
 };
 
 /**
- *
+ * Filter computed state
  * @param {object} obj
  * @returns {function[]}
  */

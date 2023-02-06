@@ -198,14 +198,6 @@ const isPrimitive = (value) => {
 };
 
 /**
- * Generate random chars. Mainly to use in webcomponent without name
- * @return {string}
- */
-export const randomChars = () => {
-  return Math.random().toString(36).substring(2, 9).toLowerCase();
-};
-
-/**
  * objectOnChange
  * Observe an object change, and run onChange()
  * @param {*} object

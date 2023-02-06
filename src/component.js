@@ -19,8 +19,13 @@ const renderContext = {
   __$styleMap: styleMap,
 };
 
+/**
+ * Component default function initializer
+ * @param {object} options The configuration
+ * @returns {HTMLElement} The custom element
+ */
 export default function Component(options = {}) {
-  const opt = {
+  const configuration = {
     /**
      * @type {boolean}
      * Whether the `Custom Element` will be attached to a `Shadow DOM` or not. Defaults to `false`.
@@ -71,33 +76,36 @@ export default function Component(options = {}) {
 
     /**
      * Additional options.
-     * @type {any}
+     * @type {object}
      */
     ...options,
   };
 
-  const store = storeConnector(opt.$store);
-  const dom = domConnector(opt.template);
-  const methods = filterMethods(opt);
-  const initialState = filterInitialState(opt.data);
-  const computedState = filterComputedState(opt.data);
-  const global$Object = filterGlobal$Object(opt);
+  const store = storeConnector(configuration.$store);
+  const dom = domConnector(configuration.template);
+  const methods = filterMethods(configuration);
+  const initialState = filterInitialState(configuration.data);
+  const computedState = filterComputedState(configuration.data);
+  const global$Object = filterGlobal$Object(configuration);
 
   /**
-   * @type {function} update the computed states
+   * @type {function} Update the computed states
    */
   const updateComputedState = (state) => computedState.forEach((s) => s(state));
 
   /**
-   * Define and Register the WebComponent
+   * @type {HTMLElement} The component's custom element
+   */
+  let customElement = null;
+
+  /**
+   * Register the Web Component
    */
   window.customElements.define(
-    opt.tagName.toLowerCase(),
+    configuration.tagName.toLowerCase(),
     class extends HTMLElement {
       constructor() {
         super();
-
-        this.$el = this;
 
         // Hide the `Custom Element` until it's rendered
         this.style.visibility = !this.style.visibility
@@ -108,7 +116,12 @@ export default function Component(options = {}) {
          * @type {HTMLElement|ShadowRoot}
          * Attach to a Shadow DOM or just stay a `Custom Element`
          */
-        this.$root = opt.shadowDOM ? this.attachShadow({ mode: "open" }) : this;
+        this.$root = configuration.shadowDOM
+          ? this.attachShadow({ mode: "open" })
+          : this;
+
+        // Set the outside scope's `customElement` to `this` so it can be returned from the default function
+        customElement = this;
       }
 
       /**
@@ -126,14 +139,14 @@ export default function Component(options = {}) {
           updateComputedState(this._state);
 
           if (dom.render(this.$root, { ...this._state, ...renderContext })) {
-            opt.updated.call(this.context);
+            configuration.updated.call(this.context);
           }
 
           // Make the `Custom Element` visible now that it's been rendered
-          this.$el.style.visibility =
-            this.$el.style.visibility === "hidden"
+          this.style.visibility =
+            this.style.visibility === "hidden"
               ? "visible"
-              : this.$el.style.visibility;
+              : this.style.visibility;
         });
 
         this.disconnectStore = store(data);
@@ -146,7 +159,7 @@ export default function Component(options = {}) {
           data,
           el: this.$root,
           prop: this._state.prop,
-          $store: opt.$store,
+          $store: configuration.$store,
         };
 
         // Bind events
@@ -160,7 +173,7 @@ export default function Component(options = {}) {
 
         dom.render(this.$root, { ...this._state, ...renderContext });
 
-        opt.created.call(this.context);
+        configuration.created.call(this.context);
       }
 
       /**
@@ -168,7 +181,7 @@ export default function Component(options = {}) {
        * @returns {void}
        */
       disconnectedCallback() {
-        opt.removed.call(this.context);
+        configuration.removed.call(this.context);
         this.disconnectStore();
       }
 
@@ -181,4 +194,6 @@ export default function Component(options = {}) {
       }
     }
   );
+
+  return customElement;
 }

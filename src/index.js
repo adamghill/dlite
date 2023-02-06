@@ -1,21 +1,13 @@
 import Component from "./component.js";
-import { randomChars } from "./utils.js";
 
 const error = (msg) => {
   new Error(`dlite error: ${msg}`);
 };
 
 /**
- * Generate random custom element tag
- * @returns {string}
- */
-const getRandomCustomElementTagName = () => {
-  return `dlite-${randomChars()}`;
-};
-
-/**
  * dlite default function initializer
- * @param {object} options the configuration
+ * @param {object} options The configuration
+ * @returns {HTMLElement} The custom element
  */
 function Dlite(options) {
   const configuration = {
@@ -61,7 +53,8 @@ function Dlite(options) {
 
   const shouldCreateTag = !configuration.tagName;
   configuration.tagName =
-    configuration.tagName || getRandomCustomElementTagName();
+    configuration.tagName ||
+    `dlite-${Math.random().toString(36).substring(2, 9).toLowerCase()}`;
 
   if (configuration.el) {
     let el =
@@ -87,10 +80,6 @@ function Dlite(options) {
       // TODO: Should other attributes carry over?
       createdEl.style = el.getAttribute("style");
 
-      if (configuration.refId) {
-        createdEl.setAttribute("ref-id", configuration.refId);
-      }
-
       el.parentNode.replaceChild(createdEl, el);
     }
   }
@@ -99,18 +88,19 @@ function Dlite(options) {
     throw error(`Missing 'template' option or 'el' is not valid element.`);
   }
 
-  Component(configuration);
+  return Component(configuration);
 }
 
 /**
  *
- * @param {object|array} configuration, `dlite` configuration or array of configurations
- * @param {object} sharedConfiguration, shared global configurations fo reach component; only used with array of configurations
+ * @param {object|array} configuration `dlite` configuration or array of configurations
+ * @param {object} sharedConfiguration shared global configurations fo reach component; only used with array of configurations
+ * @returns {HTMLElement|Array<HTMLElement>} The custom element or array of custom elements for the configured components
  */
 export default (configuration, sharedConfiguration = {}) => {
   if (Array.isArray(configuration)) {
-    configuration.map((o) => Dlite({ ...sharedConfiguration, ...o }));
+    return configuration.map((o) => Dlite({ ...sharedConfiguration, ...o }));
   } else {
-    Dlite(configuration);
+    return Dlite(configuration);
   }
 };
