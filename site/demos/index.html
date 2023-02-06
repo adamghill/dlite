@@ -14,20 +14,34 @@
 </head>
 
 <body>
-  <ajax-get url="https://www.boredapi.com/api/activity"></ajax-get>
+  <ajax-get url="https://www.boredapi.com/api/activity" id="ajax-get"></ajax-get>
 
   <template id="template-shadow" style="color: purple;">
     I am the shadow
   </template>
 
-  <template id="template-no-shadow" style="color: pink;">
+  <template id="template-no-shadow" style="color: pink;" class="blob">
     I am not the shadow
   </template>
 
   <template id="in-place-template">
+    <style>
+      :host {
+        color: violet
+      }
+    </style>
+    <style>
+      * {
+        color: brown
+      }
+    </style>
+    <script>
+      alert('hello');
+    </script>
+
     <h1>{this.prop.url ? this.prop.url : 'https://www.boredapi.com/api/activity'}</h1>
     <div>
-      <h2>{this.activity.activity}</h2>
+      <h2 class="activity">{this.activity.activity}</h2>
       <ul>
         <li>Type: {this.activity.type}</li>
         <li>Price: {this.activity.price}</li>

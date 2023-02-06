@@ -9,10 +9,10 @@ import Component from "../src/component.js";
 test("initialize", () => {
   const template = `<div>Hello World</div>`;
 
-  const c = Component({
+  const actual = Component({
     template: template,
     tagName: "my-tag",
   });
 
-  expect(c).toBe(undefined);
+  expect(actual).toBe(null);
 });

@@ -1,13 +1,6 @@
-<style>
-  /* TODO: Make scoped styles work */
-  * {
-    color: green;
-  }
-</style>
-
 <h1>{this.prop.url ? this.prop.url : 'https://www.boredapi.com/api/activity'}</h1>
 <div>
-  <h2>{this.activity.activity}</h2>
+  <h2 class="activity">{this.activity.activity}</h2>
   <ul>
     <li>Type: {this.activity.type}</li>
     <li>Price: {this.activity.price}</li>

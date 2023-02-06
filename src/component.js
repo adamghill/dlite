@@ -143,10 +143,9 @@ export default function Component(options = {}) {
           }
 
           // Make the `Custom Element` visible now that it's been rendered
-          this.style.visibility =
-            this.style.visibility === "hidden"
-              ? "visible"
-              : this.style.visibility;
+          if (this.style.visibility === "hidden") {
+            this.style.removeProperty("visibility");
+          }
         });
 
         this.disconnectStore = store(data);

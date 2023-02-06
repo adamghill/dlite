@@ -113,18 +113,33 @@ export const bindPublicMethodsToContext = (context, methods, contextState) => {
  * @returns {{html: string, render: function }}
  */
 export const domConnector = (template) => {
-  const node = htmlToDom(toStrLit(template));
-  parseDirectives(node);
-  tokenizeEvents(node);
+  const { head, body } = htmlToDom(template);
 
-  const html = decodeHTMLStringForDirective(node.innerHTML);
+  parseDirectives(body);
+  tokenizeEvents(body);
+
+  let html = toStrLit(decodeHTMLStringForDirective(body.innerHTML));
+
+  // Add style elements
+  head.querySelectorAll("style").forEach((el) => {
+    html += el.outerHTML;
+  });
+
+  // TODO: Add script elements; they do not get executed
+
   const lit = parseLit(html);
 
   return {
     html,
     render: (target, state) => {
-      const newNode = htmlToDom(lit(state));
-      return !target.isEqualNode(newNode) ? emerj(target, newNode) : false;
+      const { head: newHead, body: newBody } = htmlToDom(lit(state));
+
+      // Add style elements
+      newBody.append(...newHead.querySelectorAll("style"));
+
+      // TODO: Add script elements; they do not get executed
+
+      return !target.isEqualNode(newBody) ? emerj(target, newBody) : false;
     },
   };
 };

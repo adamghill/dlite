@@ -98,10 +98,12 @@ export const isElement = (obj) => {
 /**
  * Turn an HTML string into HTMLElement
  * @param {string} html
- * @returns {HTMLElement}
+ * @returns {{head: HTMLHeadElement, body: HTMLElement}}
  */
 export const htmlToDom = (html) => {
-  return new DOMParser().parseFromString(html, "text/html").body; //.firstChild;
+  const parsedDOM = new DOMParser().parseFromString(html, "text/html");
+
+  return { head: parsedDOM.head, body: parsedDOM.body };
 };
 
 /**

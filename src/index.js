@@ -78,7 +78,18 @@ function Dlite(options) {
 
       // Set style from original element on new element
       // TODO: Should other attributes carry over?
-      createdEl.style = el.getAttribute("style");
+
+      if (el.getAttribute("style")) {
+        createdEl.style = el.getAttribute("style");
+      }
+
+      if (el.id) {
+        createdEl.id = el.id;
+      }
+
+      if (el.classList.length > 0) {
+        createdEl.classList = el.classList;
+      }
 
       el.parentNode.replaceChild(createdEl, el);
     }

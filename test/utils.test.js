@@ -13,7 +13,6 @@ import {
   set,
   get,
   toStrLit,
-  randomChars,
   kebabCase,
   camelCase,
   styleMap,
@@ -59,11 +58,32 @@ describe("parseLit", () => {
 describe("htmlToDom", () => {
   test("div to HTMLElement", () => {
     const div = "<div>Hello World</div>";
-    expect(htmlToDom(div)).toBeInstanceOf(HTMLElement);
+    const { _, body } = htmlToDom(div);
+
+    expect(body).toBeInstanceOf(HTMLElement);
   });
+
   test("div to return same outerHTML div", () => {
     const div = "<body><div>Hello World</div></body>";
-    expect(htmlToDom(div).outerHTML).toBe(div);
+    const { _, body } = htmlToDom(div);
+
+    expect(body.outerHTML).toBe(div);
+  });
+
+  test("style to HTMLHeadElement", () => {
+    const style = "<style>* { color: red; }</style>";
+    const html = `${style}<div>Hello World</div>`;
+    const { head, _ } = htmlToDom(html);
+
+    expect(head).toBeInstanceOf(HTMLHeadElement);
+  });
+
+  test("style to same innerHTML", () => {
+    const style = "<style>* { color: red; }</style>";
+    const html = `${style}<div>Hello World</div>`;
+    const { head, _ } = htmlToDom(html);
+
+    expect(head.innerHTML).toBe(style);
   });
 });
 
@@ -219,12 +239,6 @@ describe("toStrLit", () => {
 
   test("string with $ with ternary", () => {
     expect(toStrLit("hello ${this.x ? y : z}")).toBe("hello ${this.x ? y : z}");
-  });
-});
-
-describe("randomChars", () => {
-  test("Default length 7", () => {
-    expect(randomChars().length).toBe(7);
   });
 });
 
