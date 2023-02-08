@@ -22,11 +22,12 @@
     "dom"
   ],
   "scripts": {
-    "size": "gzip-size ./dist/dlite.es.js",
+    "size": "gzip-size ./dist/dlite.es.js --include-original && echo `brotli dist/dlite.es.js -c | wc -c | numfmt --to=iec --suffix=B --format='%.2f'` '(brotli)'",
+    "check-size": "gzip-size ./dist/dlite.es.js --raw",
     "ts": "tsc",
     "t": "vitest run",
     "tw": "vitest",
-    "b": "npm run build && stat -f%z dist/dlite.es.js | numfmt --to=iec --suffix=B --format='%.2f' && gzip-size ./dist/dlite.es.js",
+    "b": "npm run build && stat -f%z dist/dlite.es.js | numfmt --to=iec --suffix=B --format='%.2f' && npm run size",
     "build": "rollup -c",
     "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=site dev-server",
     "sb": "poetry run sphinx-build -W -b dirhtml docs/source docs/build && rsync -a --exclude='.*/' --exclude='_sources/' docs/build/ site/",
@@ -48,7 +49,7 @@
     "@babel/preset-env": "^7.4.3",
     "cross-var": "^1.1.0",
     "gh-pages": "^2.0.1",
-    "gzip-size-cli": "^3.0.0",
+    "gzip-size-cli": "^5.1.0",
     "jsdom": "^21.1.0",
     "mutationobserver-shim": "^0.3.3",
     "rollup": "^3.13.0",
