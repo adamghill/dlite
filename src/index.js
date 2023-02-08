@@ -3,6 +3,31 @@ import Component from "./component.js";
 const error = (msg) => {
   new Error(`dlite error: ${msg}`);
 };
+/**
+ * Fetches the url passed to it and returns the response based on content type.
+ *
+ * Raises an error for >=400 status codes.
+ *
+ * @param {string} url
+ * @returns {Promise<string>}
+ */
+export async function fetcher(url) {
+  return await fetch(url)
+    .then((res) => {
+      if (res.status >= 400) {
+        throw new Error(`${res.url} (${res.status})`);
+      }
+
+      return res;
+    })
+    .then((res) => {
+      if ((res.headers.get("content-type") || "").includes("json")) {
+        return res.json();
+      }
+
+      return res.text();
+    });
+}
 
 /**
  * dlite default function initializer
