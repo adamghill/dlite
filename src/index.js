@@ -1,8 +1,5 @@
 import Component from "./component.js";
 
-const error = (msg) => {
-  new Error(`dlite error: ${msg}`);
-};
 /**
  * Fetches the url passed to it and returns the response based on content type.
  *
@@ -73,6 +70,13 @@ function Dlite(options) {
      */
     shadowDOM: false,
 
+    /**
+     * debug
+     * @type {boolean}
+     * Whether in debug mode or not.
+     */
+    debug: false,
+
     ...options,
   };
 
@@ -88,14 +92,19 @@ function Dlite(options) {
         : configuration.el;
 
     if (!el) {
-      console.error(`'${configuration.el}' is not valid element.`);
-      return;
+      const msg =
+        typeof configuration.el === "string"
+          ? `'${configuration.el}' could not be found.`
+          : `'${configuration.el}' is not a valid element.`;
+
+      throw new Error(msg);
     }
 
     if (!configuration.template) {
       configuration.template = el.innerHTML;
     }
 
+    // Clear out the innerHTML of the element
     el.innerHTML = "";
 
     if (shouldCreateTag) {
@@ -121,7 +130,7 @@ function Dlite(options) {
   }
 
   if (!configuration.template) {
-    throw error(`Missing 'template' option or 'el' is not valid element.`);
+    throw new Error(`Missing 'template' option or 'el' is not valid element.`);
   }
 
   return Component(configuration);
@@ -135,7 +144,26 @@ function Dlite(options) {
  */
 export default (configuration, sharedConfiguration = {}) => {
   if (Array.isArray(configuration)) {
-    return configuration.map((o) => Dlite({ ...sharedConfiguration, ...o }));
+    return configuration.map((config) => {
+      try {
+        return Dlite({ ...sharedConfiguration, ...config });
+      } catch (e) {
+        if (sharedConfiguration.debug || config.debug) {
+          const errorDiv = document.createElement("div");
+          errorDiv.style.cssText =
+            "background-color: red; color: white; padding: 10px;";
+          errorDiv.innerHTML = `${e}<details><summary>Stacktrace</summary>${e.stack.replaceAll(
+            "\n",
+            "<br />"
+          )}</details>`;
+          document.body.prepend(errorDiv);
+
+          console.error(e);
+        } else {
+          throw e;
+        }
+      }
+    });
   } else {
     return Dlite(configuration);
   }
