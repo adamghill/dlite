@@ -216,7 +216,7 @@
 <span class="w">  </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world} {this.prop.name}!`</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">shadowDOM</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">shadowDOM</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">refId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;app&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">$store</span><span class="o">:</span><span class="w"> </span><span class="nx">Litestate</span><span class="p">(),</span>
 <span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
@@ -304,27 +304,8 @@
 </section>
 <section id="shadowdom">
 <h3><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code><a class="headerlink" href="#shadowdom" title="Permalink to this heading">#</a></h3>
-<p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p>
-<p>By default components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a>. The <code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code> can be attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it by setting this property to <code class="docutils literal notranslate"><span class="pre">true</span></code>. Being attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> will prevent JavaScript from accessing the internal elements of the component or being affected by normal CSS styles.</p>
-</section>
-<section id="refid">
-<h3><code class="docutils literal notranslate"><span class="pre">refId</span></code><a class="headerlink" href="#refid" title="Permalink to this heading">#</a></h3>
-<p>[<code class="docutils literal notranslate"><span class="pre">string</span></code>]</p>
-<p>An identifier for an <a class="reference internal" href="../#in-place-element"><span class="std std-ref">in-place element</span></a> so it can accessed externally by JavaScript while in <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> mode.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="c1">// If the `refId` was set to &quot;app&quot; it cna be retrieved via `querySelector`</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[ref-id=&quot;app&quot;]&#39;</span><span class="p">);</span>
-<span class="kd">let</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">component</span><span class="p">.</span><span class="nx">$root</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#textbox&quot;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If you want to access an element in the component from inside the component, you do not need to set a <code class="docutils literal notranslate"><span class="pre">refId</span></code>. <code class="docutils literal notranslate"><span class="pre">this.el</span></code> can be used instead.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">updated</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`The value of an input is: </span><span class="si">${</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;#textbox&#39;</span><span class="p">).</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-<span class="p">},</span>
-</pre></div>
-</div>
-</div>
+<p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p>
+<p>Components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a> and by default it will be  attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it from the rest of the page with <a class="reference internal" href="../template/#scoped-css"><span class="std std-doc">scoped CSS</span></a>. Disable this behavior by setting <code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> and allow the component to be affected by the page’s CSS styles.</p>
 </section>
 </section>
 <section id="methods">
@@ -488,7 +469,6 @@
 </li>
 <li><a class="reference internal" href="#store"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">$store</span></code></span></a></li>
 <li><a class="reference internal" href="#shadowdom"><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code></a></li>
-<li><a class="reference internal" href="#refid"><code class="docutils literal notranslate"><span class="pre">refId</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#methods">Methods</a><ul>

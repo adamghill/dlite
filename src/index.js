@@ -1,4 +1,5 @@
 import Component from "./component.js";
+import { getAttrs } from "./utils.js";
 
 /**
  * Fetches the url passed to it and returns the response based on content type.
@@ -66,9 +67,9 @@ function Dlite(options) {
     /**
      * shadowDOM
      * @type {boolean}
-     * Attach the `Custom Element` to a `Shadow DOM`. Defaults to `false`.
+     * Attach the `Custom Element` to a `Shadow DOM`. Defaults to `true`.
      */
-    shadowDOM: false,
+    shadowDOM: true,
 
     /**
      * debug
@@ -86,51 +87,42 @@ function Dlite(options) {
     `dlite-${Math.random().toString(36).substring(2, 9).toLowerCase()}`;
 
   if (configuration.el) {
-    let el =
-      typeof configuration.el === "string"
-        ? document.querySelector(configuration.el)
-        : configuration.el;
+    if (typeof configuration.el === "string") {
+      const el = document.querySelector(configuration.el);
 
-    if (!el) {
-      const msg =
-        typeof configuration.el === "string"
-          ? `'${configuration.el}' could not be found.`
-          : `'${configuration.el}' is not a valid element.`;
+      if (!el) {
+        throw new Error(`'${configuration.el}' could not be found.`);
+      }
 
-      throw new Error(msg);
+      configuration.el = el;
     }
 
     if (!configuration.template) {
-      configuration.template = el.innerHTML;
+      configuration.template = configuration.el.innerHTML;
     }
 
     // Clear out the innerHTML of the element
-    el.innerHTML = "";
+    configuration.el.innerHTML = "";
 
     if (shouldCreateTag) {
       const createdEl = document.createElement(configuration.tagName);
 
-      // Set style from original element on new element
-      // TODO: Should other attributes carry over?
-
-      if (el.getAttribute("style")) {
-        createdEl.style = el.getAttribute("style");
+      // Set attributes from the original element on the new element
+      // Useful so that `id`, `style`, `class` gets set on new `Custom Element`
+      for (const [attrName, attrValue] of Object.entries(
+        getAttrs(configuration.el)
+      )) {
+        createdEl.setAttribute(attrName, attrValue);
       }
 
-      if (el.id) {
-        createdEl.id = el.id;
-      }
-
-      if (el.classList.length > 0) {
-        createdEl.classList = el.classList;
-      }
-
-      el.parentNode.replaceChild(createdEl, el);
+      configuration.el.parentNode.replaceChild(createdEl, configuration.el);
     }
+  } else if (!configuration.el && shouldCreateTag) {
+    throw new Error(`Missing either 'el' or 'tagName' setting.`);
   }
 
   if (!configuration.template) {
-    throw new Error(`Missing 'template' option or 'el' is not valid element.`);
+    throw new Error(`Missing 'template' setting.`);
   }
 
   return Component(configuration);
@@ -144,15 +136,18 @@ function Dlite(options) {
  */
 export default (configuration, sharedConfiguration = {}) => {
   if (Array.isArray(configuration)) {
-    return configuration.map((config) => {
+    return configuration.map((config, index) => {
       try {
         return Dlite({ ...sharedConfiguration, ...config });
       } catch (e) {
         if (sharedConfiguration.debug || config.debug) {
+          // Add error message to page
           const errorDiv = document.createElement("div");
           errorDiv.style.cssText =
             "background-color: red; color: white; padding: 10px;";
-          errorDiv.innerHTML = `${e}<details><summary>Stacktrace</summary>${e.stack.replaceAll(
+          errorDiv.innerHTML = `<h1 style="margin: 0;">Component ${
+            index + 1
+          }</h1>${e}<details><summary>Stacktrace</summary>${e.stack.replaceAll(
             "\n",
             "<br />"
           )}</details>`;

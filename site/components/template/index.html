@@ -211,7 +211,7 @@
         <article role="main">
           <section id="template">
 <h1>Template<a class="headerlink" href="#template" title="Permalink to this heading">#</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">dlite</span></code> uses an HTML-based template syntax that declaratively binds the rendered DOM to the components’s data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dlite</span></code> uses an HTML-based template syntax that declaratively binds the rendered DOM to the component’s data.</p>
 <section id="interpolation">
 <h2>Interpolation<a class="headerlink" href="#interpolation" title="Permalink to this heading">#</a></h2>
 <p>Access <code class="docutils literal notranslate"><span class="pre">data</span></code> in HTML templates via <code class="docutils literal notranslate"><span class="pre">this.{data-property-name}</span></code>.</p>
@@ -232,6 +232,38 @@
 <span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Hello {this.name}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Date: {this.todaysDate}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="scoped-css">
+<h2>Scoped CSS<a class="headerlink" href="#scoped-css" title="Permalink to this heading">#</a></h2>
+<p>Components are created as <code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Elements</span></code> which are attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> by default. The <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> provides encapsulation for the component so that it will not be affected by page CSS. The component can include a <code class="docutils literal notranslate"><span class="pre">style</span></code> tag which will affect just that component.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">created</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">todaysDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">().</span><span class="nx">toLocaleString</span><span class="p">();</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="err">red</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">    </span><span class="nt">h1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">blue</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+
+  <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>This will be blue.<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
 </pre></div>
 </div>
@@ -295,6 +327,7 @@
             <ul>
 <li><a class="reference internal" href="#">Template</a><ul>
 <li><a class="reference internal" href="#interpolation">Interpolation</a></li>
+<li><a class="reference internal" href="#scoped-css">Scoped CSS</a></li>
 </ul>
 </li>
 </ul>

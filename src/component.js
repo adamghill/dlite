@@ -28,9 +28,9 @@ export default function Component(options = {}) {
   const configuration = {
     /**
      * @type {boolean}
-     * Whether the `Custom Element` will be attached to a `Shadow DOM` or not. Defaults to `false`.
+     * Whether the `Custom Element` will be attached to a `Shadow DOM` or not. Defaults to `true`.
      */
-    shadowDOM: false,
+    shadowDOM: true,
 
     /**
      * The element tag name.

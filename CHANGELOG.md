@@ -1,3 +1,8 @@
+# 0.16.0
+- Scoped CSS when attached to a `Shadow DOM`
+- Make `shadowDOM` default `true` (again) now that scoped CSS is working
+- `debug` setting to show `dlite` error messages on the page while developing
+
 # 0.15.0
 - Revert `shadowDOM` default back to `false` since that will be less disruptive and a better first experience
 

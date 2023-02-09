@@ -6,21 +6,17 @@ The [code](https://github.com/adamghill/dlite) is licensed as MIT. PRs and bug r
 
 ## ⭐ Features
 
-- Seriously tiny: **<10 kB** (**<4 kB** when gzipped)
-- Reactive web components
-- Internal state manager
-- Progressive template language that leverages `template literals`
-- Props support
-- Lifecycle methods
-- State management
-- Computed properties
-- One-way data flow
-- Two-way data binding
-- Events handling
-- Component lifecycle hooks
-- Directives (e.g. `if`/`else`, `for`, `style`, `class`)
-- Can attach to a Shadow DOM
+- Seriously tiny: **<10 kB** (**<5 kB** when gzipped)
 - No dependencies, no virtual DOM, no JSX, and no build tool required
+- Reactive Web Components
+- Progressive [template language](components/template.md#interpolation) that leverages `template literals`
+- Props
+- Computed properties
+- [Two-way data binding](components/binding.md)
+- [Events handling](components/events.md)
+- Component lifecycle hooks
+- [Directives](components/directives.md) (e.g. `if`/`else`, `for`, `style`, `class`)
+- Shadow DOM by default with [scoped CSS](components/template.md#scoped-css)
 - Put a script tag in your HTML and _go_ ⚡
 
 It is compatible with all modern browsers that support [`ES2015`/`ES6`](https://caniuse.com/#feat=es6), [`ESM`](https://caniuse.com/?search=esm), and [`Proxy`](https://caniuse.com/#search=proxy).

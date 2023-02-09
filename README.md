@@ -16,21 +16,17 @@ https://dlitejs.com
 
 ## ⭐ Features
 
-- Seriously tiny: **<10 kB** (**<4 kB** when gzipped)
+- Seriously tiny: **<10 kB** (**<5 kB** when gzipped)
+- No dependencies, no virtual DOM, no JSX, and no build tool required
 - Reactive Web Components
-- Internal state manager
 - Progressive template language that leverages `template literals`
 - Props support
-- Lifecycle methods
-- State management
 - Computed properties
-- One-way data flow
 - Two-way data binding
 - Events handling
 - Component lifecycle hooks
 - Directives (e.g. `if`/`else`, `for`, `style`, `class`)
-- Can attach to a Shadow DOM
-- No dependencies, no virtual DOM, no JSX, and no build tool required
+- Shadow DOM by default with scoped CSS
 - Put a script tag in your HTML and _go_ ⚡
 
 It is compatible with all modern browsers that support [`ES2015`/`ES6`](https://caniuse.com/#feat=es6), [`ESM`](https://caniuse.com/?search=esm), and [`Proxy`](https://caniuse.com/#search=proxy).

@@ -7,7 +7,7 @@ A configuration with examples for all possible properties.
   el: '#app',
   tagName: 'hello-world',
   template: `Hello {this.world} {this.prop.name}!`,
-  shadowDOM: false,
+  shadowDOM: true,
   refId: "app",
   $store: Litestate(),
   data: {
@@ -101,9 +101,9 @@ You cannot mutate the state or access custom methods in the computed data functi
 A shared store manager, i.e. `reStated`, `Redux`, [Litestate](https://github.com/mardix/litestate). The store instance must have `getState` and `subscribe` functions. 
 
 ### `shadowDOM`
-[`boolean`: `false`]
+[`boolean`: `true`]
 
-By default components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components). The `Custom Element` can be attached to a `Shadow DOM` to help encapsulate it by setting this property to `true`. Being attached to a `Shadow DOM` will prevent JavaScript from accessing the internal elements of the component or being affected by normal CSS styles.
+Components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components) and by default it will be  attached to a `Shadow DOM` to help encapsulate it from the rest of the page with [scoped CSS](template.md#scoped-css). Disable this behavior by setting `shadowDOM` to `false` and allow the component to be affected by the page's CSS styles.
 
 ## Methods
 
