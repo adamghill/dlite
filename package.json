@@ -31,7 +31,7 @@
     "build": "rollup -c",
     "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=site dev-server",
     "sb": "poetry run sphinx-build -W -b dirhtml docs/source docs/build && rsync -a --exclude='.*/' --exclude='_sources/' docs/build/ site/",
-    "sa": "poetry run sphinx-autobuild -W b dirhtml docs/source docs/build"
+    "sa": "poetry run sphinx-autobuild -W -b dirhtml docs/source docs/build"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
