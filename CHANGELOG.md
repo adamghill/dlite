@@ -1,7 +1,12 @@
 # 0.16.0
 - Scoped CSS when attached to a `Shadow DOM`
 - Make `shadowDOM` default `true` (again) now that scoped CSS is working
-- `debug` setting to show `dlite` error messages on the page while developing
+- Add `debug` setting to show `dlite` error messages on the page while developing
+- Return components from `Dlite` initializer for use in JavaScript
+
+## Breaking changes
+
+- Remove `refId` setting because attributes (i.e. `id`) are copied to custom elements and components are now returned from the `Dlite` initializer
 
 # 0.15.0
 - Revert `shadowDOM` default back to `false` since that will be less disruptive and a better first experience

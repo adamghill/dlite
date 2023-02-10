@@ -43,13 +43,6 @@ function Dlite(options) {
     el: null,
 
     /**
-     * refId
-     * @type {string | null}
-     * A unique identifier to select an in-place element.
-     */
-    refId: null,
-
-    /**
      * template
      * @type {string}
      * Template string used to create the component.
