@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex/" /><link rel="search" title="Search" href="../../search/" /><link rel="next" title="Template" href="../template/" /><link rel="prev" title="Initialize" href="../" />
 
     <!-- Generated with Sphinx 5.3.0 and Furo 2022.12.07 -->
-        <title>Configuration - dlite 0.15.0 documentation</title>
+        <title>Configuration - dlite 0.16.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=91d0f0d1c444bdcb17a68e833c7a53903343c195" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
@@ -124,7 +124,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../"><div class="brand">dlite 0.15.0 documentation</div></a>
+      <a href="../../"><div class="brand">dlite 0.16.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -147,7 +147,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../">
   
   
-  <span class="sidebar-brand-text">dlite 0.15.0 documentation</span>
+  <span class="sidebar-brand-text">dlite 0.16.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search/" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -211,13 +211,12 @@
         <article role="main">
           <section id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">#</a></h1>
-<p>A configuration with examples for all possible properties.</p>
+<p>A configuration with examples for all possible settings.</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world} {this.prop.name}!`</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">shadowDOM</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nx">refId</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;app&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nx">$store</span><span class="o">:</span><span class="w"> </span><span class="nx">Litestate</span><span class="p">(),</span>
 <span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
@@ -242,35 +241,100 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<section id="properties">
-<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h2>
+<section id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this heading">#</a></h2>
 <section id="el">
 <h3><code class="docutils literal notranslate"><span class="pre">el</span></code><a class="headerlink" href="#el" title="Permalink to this heading">#</a></h3>
 <p>[<code class="docutils literal notranslate"><span class="pre">string</span></code> | <code class="docutils literal notranslate"><span class="pre">HTMLElement</span></code>]</p>
-<p>The element where the view instance will be created and rendered. The <code class="docutils literal notranslate"><span class="pre">innerHTML</span></code> of the element will be used as the template.</p>
-<p>This can be an HTML selector (e.g. <code class="docutils literal notranslate"><span class="pre">#someId</span></code>, <code class="docutils literal notranslate"><span class="pre">[some-data-attribute]</span></code>) or a query selector (e.g. <code class="docutils literal notranslate"><span class="pre">document.querySelector('#myId')</span></code>).</p>
-<p>Required for <a class="reference internal" href="../#in-place-element"><span class="std std-ref">in-place elements</span></a>.</p>
+<p>The element where the component will be created and rendered.</p>
+<p>This can be an HTML selector (e.g. <code class="docutils literal notranslate"><span class="pre">#someId</span></code>, <code class="docutils literal notranslate"><span class="pre">[some-data-attribute]</span></code>) or a DOM element (e.g. <code class="docutils literal notranslate"><span class="pre">document.querySelector('#myId')</span></code>).</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span><span class="w">  </span><span class="c1">// document.querySelector(&#39;#app&#39;)</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">template</span></code> is not set, the <code class="docutils literal notranslate"><span class="pre">innerHTML</span></code> of the element will be used as the template as an <a class="reference internal" href="../#in-place-element"><span class="std std-ref">in-place element</span></a>.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">template</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;app&quot;</span><span class="p">&gt;</span>
+  Hello {this.world}!
+<span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="tagname">
 <h3><code class="docutils literal notranslate"><span class="pre">tagName</span></code><a class="headerlink" href="#tagname" title="Permalink to this heading">#</a></h3>
 <p>[<code class="docutils literal notranslate"><span class="pre">string</span></code>]</p>
-<p>Name for the <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom element</span></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<p>Name for the <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom element</span></a> where the component will be created and rendered. Required for <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom elements</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Custom element names <strong>must</strong> contain a hyphen. <code class="docutils literal notranslate"><span class="pre">my-counter</span></code> will be used as <code class="docutils literal notranslate"><span class="pre">&lt;my-counter&gt;&lt;/my-counter&gt;</span></code></p>
 </div>
-<p>Required for <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom elements</span></a>.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">hello-world</span><span class="p">&gt;&lt;/</span><span class="nt">hello-world</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="template">
 <h3><code class="docutils literal notranslate"><span class="pre">template</span></code><a class="headerlink" href="#template" title="Permalink to this heading">#</a></h3>
 <p>[<code class="docutils literal notranslate"><span class="pre">string</span></code>]</p>
 <p>Markup for the HTML of the component.</p>
-<p>Required for <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom elements</span></a>.</p>
+<p>Required for <a class="reference internal" href="../#custom-element"><span class="std std-ref">custom elements</span></a>. If <code class="docutils literal notranslate"><span class="pre">template</span></code> and <code class="docutils literal notranslate"><span class="pre">el</span></code> are set, the <code class="docutils literal notranslate"><span class="pre">template</span></code> will override the <code class="docutils literal notranslate"><span class="pre">innerHTML</span></code> of the <code class="docutils literal notranslate"><span class="pre">el</span></code>.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">world</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;World&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">hello-world</span><span class="p">&gt;&lt;/</span><span class="nt">hello-world</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="data">
 <h3><code class="docutils literal notranslate"><span class="pre">data</span></code><a class="headerlink" href="#data" title="Permalink to this heading">#</a></h3>
 <p>[<code class="docutils literal notranslate"><span class="pre">object</span></code>]</p>
-<p>Reactive application state. Whenever a property is added, updated or removed it will trigger a DOM update (if necessary).</p>
+<p>Reactive application state. Whenever a property is updated or removed it will trigger a DOM update (if necessary).</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Keys must be present at initialization to be reactive. Adding a new a key after initialization will <em>not</em> trigger an update.</p>
+</div>
 <p>Values are expected to be a <code class="docutils literal notranslate"><span class="pre">string</span></code>, <code class="docutils literal notranslate"><span class="pre">number</span></code>, <code class="docutils literal notranslate"><span class="pre">object</span></code>, <code class="docutils literal notranslate"><span class="pre">array</span></code>, <code class="docutils literal notranslate"><span class="pre">boolean</span></code>, <code class="docutils literal notranslate"><span class="pre">null</span></code>, <code class="docutils literal notranslate"><span class="pre">undefined</span></code> or <code class="docutils literal notranslate"><span class="pre">function</span></code>.</p>
 <section id="computed-data">
 <h4>Computed data<a class="headerlink" href="#computed-data" title="Permalink to this heading">#</a></h4>
@@ -305,7 +369,13 @@
 <section id="shadowdom">
 <h3><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code><a class="headerlink" href="#shadowdom" title="Permalink to this heading">#</a></h3>
 <p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">true</span></code>]</p>
-<p>Components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a> and by default it will be  attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it from the rest of the page with <a class="reference internal" href="../template/#scoped-css"><span class="std std-doc">scoped CSS</span></a>. Disable this behavior by setting <code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> and allow the component to be affected by the page’s CSS styles.</p>
+<p>Components are created as a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"><code class="docutils literal notranslate"><span class="pre">Custom</span> <span class="pre">Element</span></code></a> and by default it will be  attached to a <code class="docutils literal notranslate"><span class="pre">Shadow</span> <span class="pre">DOM</span></code> to help encapsulate it from the rest of the page with <a class="reference internal" href="../template/#scoped-css"><span class="std std-doc">scoped CSS</span></a>. Disable this behavior by setting <code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code> so the component will be affected by the page’s CSS styles.</p>
+</section>
+<section id="debug">
+<h3><code class="docutils literal notranslate"><span class="pre">debug</span></code><a class="headerlink" href="#debug" title="Permalink to this heading">#</a></h3>
+<p>[<code class="docutils literal notranslate"><span class="pre">boolean</span></code>: <code class="docutils literal notranslate"><span class="pre">false</span></code>]</p>
+<p>Whether or not to output configuration error messages to the page.</p>
+<p><img alt="Error message" src="../../_images/debug-error.png" /></p>
 </section>
 </section>
 <section id="methods">
@@ -315,18 +385,64 @@
 <section id="created">
 <h4><code class="docutils literal notranslate"><span class="pre">created</span></code><a class="headerlink" href="#created" title="Permalink to this heading">#</a></h4>
 <p>Gets called when the component is created.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">created</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;This will log when the component is created&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">hello-world</span><span class="p">&gt;&lt;/</span><span class="nt">hello-world</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="updated">
 <h4><code class="docutils literal notranslate"><span class="pre">updated</span></code><a class="headerlink" href="#updated" title="Permalink to this heading">#</a></h4>
 <p>Gets called each time the <a class="reference internal" href="#data"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">data</span></code></span></a> or the <a class="reference internal" href="#store"><span class="std std-doc"><code class="docutils literal notranslate"><span class="pre">$store</span></code></span></a> updates the component’s state.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">updated</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;This will log when the component is updated&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">hello-world</span><span class="p">&gt;&lt;/</span><span class="nt">hello-world</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 <section id="removed">
 <h4><code class="docutils literal notranslate"><span class="pre">removed</span></code><a class="headerlink" href="#removed" title="Permalink to this heading">#</a></h4>
 <p>Gets called when the component is removed.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;module&quot;</span><span class="p">&gt;</span>
+<span class="w">  </span><span class="k">import</span><span class="w"> </span><span class="nx">Dlite</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;//unpkg.com/dlite&#39;</span><span class="p">;</span>
+
+<span class="w">  </span><span class="nx">Dlite</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hello-world&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">template</span><span class="o">:</span><span class="w"> </span><span class="sb">`Hello {this.world}!`</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">removed</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;This will log when the component is removed&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">});</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">hello-world</span><span class="p">&gt;&lt;/</span><span class="nt">hello-world</span><span class="p">&gt;</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="custom-methods">
 <h3>Custom methods<a class="headerlink" href="#custom-methods" title="Permalink to this heading">#</a></h3>
+<p>Custom methods can be accessed via <code class="docutils literal notranslate"><span class="pre">this</span></code>.</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Dlite</span><span class="p">({</span>
 <span class="w">  </span><span class="p">...</span>
 <span class="w">  </span><span class="nx">created</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
@@ -343,10 +459,15 @@
 <p>You can use async methods with <code class="docutils literal notranslate"><span class="pre">async</span></code> and <code class="docutils literal notranslate"><span class="pre">await</span></code>.</p>
 <div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">Dlite</span><span class="p">({</span>
 <span class="w">  </span><span class="nx">el</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;#app&#39;</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">data</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">status</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">apiData</span><span class="o">:</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">  </span><span class="p">}</span>
 <span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">loadData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;loading...&#39;</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;https://some-api.com/data.json&#39;</span><span class="p">);</span>
-<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">apiData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
 <span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;loading completed!&#39;</span><span class="p">;</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="k">async</span><span class="w"> </span><span class="nx">created</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -459,7 +580,7 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Configuration</a><ul>
-<li><a class="reference internal" href="#properties">Properties</a><ul>
+<li><a class="reference internal" href="#settings">Settings</a><ul>
 <li><a class="reference internal" href="#el"><code class="docutils literal notranslate"><span class="pre">el</span></code></a></li>
 <li><a class="reference internal" href="#tagname"><code class="docutils literal notranslate"><span class="pre">tagName</span></code></a></li>
 <li><a class="reference internal" href="#template"><code class="docutils literal notranslate"><span class="pre">template</span></code></a></li>
@@ -469,6 +590,7 @@
 </li>
 <li><a class="reference internal" href="#store"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">$store</span></code></span></a></li>
 <li><a class="reference internal" href="#shadowdom"><code class="docutils literal notranslate"><span class="pre">shadowDOM</span></code></a></li>
+<li><a class="reference internal" href="#debug"><code class="docutils literal notranslate"><span class="pre">debug</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#methods">Methods</a><ul>
