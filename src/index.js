@@ -28,6 +28,24 @@ export async function fetcher(url) {
 }
 
 /**
+ * Creates a new element
+ * @param {string} tagName The element's tag name
+ * @param {object} attrs Attributes that should be set on the element
+ * @param {string} html HTML to set on the el's innerHTML
+ * @returns {HTMLElement} The custom element
+ */
+function createElement(tagName, attrs = {}, html = "") {
+  const el = document.createElement(tagName);
+  el.innerHTML = html;
+
+  for (const [attrName, attrValue] of Object.entries(attrs)) {
+    el.setAttribute(attrName, attrValue);
+  }
+
+  return el;
+}
+
+/**
  * dlite default function initializer
  * @param {object} options The configuration
  * @returns {HTMLElement} The custom element
@@ -90,6 +108,7 @@ function Dlite(options) {
       configuration.el = el;
     }
 
+    // Set the `template` as the el's innerHTML if needed
     if (!configuration.template) {
       configuration.template = configuration.el.innerHTML;
     }
@@ -98,7 +117,12 @@ function Dlite(options) {
     configuration.el.innerHTML = "";
 
     if (shouldCreateTag) {
-      const createdEl = document.createElement(configuration.tagName);
+      // Set attributes from the original element on the new element
+      // Useful so that `id`, `style`, `class`, etc gets set on new `Custom Element`
+      const createdEl = createElement(
+        configuration.tagName,
+        getAttrs(configuration.el)
+      );
 
       // Set attributes from the original element on the new element
       // Useful so that `id`, `style`, `class` gets set on new `Custom Element`
@@ -125,25 +149,33 @@ function Dlite(options) {
  *
  * @param {object|array} configuration `dlite` configuration or array of configurations
  * @param {object} sharedConfiguration shared global configurations fo reach component; only used with array of configurations
- * @returns {HTMLElement|Array<HTMLElement>} The custom element or array of custom elements for the configured components
+ * @returns {Array<HTMLElement>} An array of custom elements for the configured components
  */
 export default (configuration, sharedConfiguration = {}) => {
-  if (Array.isArray(configuration)) {
-    return configuration.map((config, index) => {
+  if (!Array.isArray(configuration)) {
+    configuration = [configuration];
+  }
+
+  return configuration.map(
+    (/** @type {object} */ config, /** @type {number} */ index) => {
       try {
         return Dlite({ ...sharedConfiguration, ...config });
       } catch (e) {
         if (sharedConfiguration.debug || config.debug) {
           // Add error message to page
-          const errorDiv = document.createElement("div");
-          errorDiv.style.cssText =
-            "background-color: red; color: white; padding: 10px;";
-          errorDiv.innerHTML = `<h1 style="margin: 0;">Component ${
-            index + 1
-          }</h1>${e}<details><summary>Stacktrace</summary>${e.stack.replaceAll(
-            "\n",
-            "<br />"
-          )}</details>`;
+          const errorDiv = createElement(
+            "div",
+            {
+              style: "background-color: red; color: white; padding: 10px;",
+            },
+            `
+<h1>#${index + 1}</h1>
+${e}
+<details>
+  <summary>Stacktrace</summary>
+  ${e.stack.replaceAll("\n", "<br>")}
+</details>`
+          );
           document.body.prepend(errorDiv);
 
           console.error(e);
@@ -151,8 +183,6 @@ export default (configuration, sharedConfiguration = {}) => {
           throw e;
         }
       }
-    });
-  } else {
-    return Dlite(configuration);
-  }
+    }
+  );
 };

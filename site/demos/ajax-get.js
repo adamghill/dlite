@@ -3,7 +3,21 @@ import Dlite, { fetcher } from "../../src/index.js";
 
 const template = await fetcher("components/ajax-get.js.html");
 
-const components = Dlite(
+let components = [];
+
+// components = Dlite({
+//   el: "#template-shadow",
+//   template: template,
+//   debug: true,
+//   data: { activity: {} },
+//   async created() {
+//     const url = "https://www.boredapi.com/api/activity";
+//     const activity = await fetcher(url);
+//     this.data.activity = activity;
+//   },
+// });
+
+components = Dlite(
   [
     {
       tagName: "ajax-get",
