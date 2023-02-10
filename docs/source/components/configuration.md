@@ -1,6 +1,6 @@
 # Configuration
 
-A configuration with examples for all possible properties.
+A configuration with examples for all possible settings.
 
 ```js
 {
@@ -8,7 +8,6 @@ A configuration with examples for all possible properties.
   tagName: 'hello-world',
   template: `Hello {this.world} {this.prop.name}!`,
   shadowDOM: true,
-  refId: "app",
   $store: Litestate(),
   data: {
     world: 'World',
@@ -33,39 +32,107 @@ A configuration with examples for all possible properties.
 }
 ```
 
-## Properties
+## Settings
 
 ### `el`
 [`string` | `HTMLElement`]
 
-The element where the view instance will be created and rendered. The `innerHTML` of the element will be used as the template. 
+The element where the component will be created and rendered.
 
-This can be an HTML selector (e.g. `#someId`, `[some-data-attribute]`) or a query selector (e.g. `document.querySelector('#myId')`).
+This can be an HTML selector (e.g. `#someId`, `[some-data-attribute]`) or a DOM element (e.g. `document.querySelector('#myId')`).
 
-Required for [in-place elements](components/index.md#in-place-element).
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    el: '#app',  // document.querySelector('#app')
+    template: `Hello {this.world}!`,
+    data: {
+      world: 'World',
+    }
+  });
+</script>
+
+<template id="app">
+</template>
+```
+
+If `template` is not set, the `innerHTML` of the element will be used as the template as an [in-place element](components/index.md#in-place-element).
+
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    el: '#app',
+    data: {
+      world: 'World',
+    }
+  });
+</script>
+
+<template id="app">
+  Hello {this.world}!
+</template>
+```
 
 ### `tagName`
 [`string`]
 
-Name for the [custom element](components/index.md#custom-element). 
+Name for the [custom element](components/index.md#custom-element) where the component will be created and rendered. Required for [custom elements](components/index.md#custom-element).
 
-```{note}
+```{warning}
 Custom element names **must** contain a hyphen. `my-counter` will be used as `<my-counter></my-counter>`
 ```
 
-Required for [custom elements](components/index.md#custom-element).
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    tagName: 'hello-world',
+    template: `Hello {this.world}!`,
+    data: {
+      world: 'World',
+    }
+  });
+</script>
+
+<hello-world></hello-world>
+```
 
 ### `template`
 [`string`]
 
 Markup for the HTML of the component.
 
-Required for [custom elements](components/index.md#custom-element).
+Required for [custom elements](components/index.md#custom-element). If `template` and `el` are set, the `template` will override the `innerHTML` of the `el`.
+
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    tagName: 'hello-world',
+    template: `Hello {this.world}!`,
+    data: {
+      world: 'World',
+    }
+  });
+</script>
+
+<hello-world></hello-world>
+```
 
 ### `data`
 [`object`]
 
-Reactive application state. Whenever a property is added, updated or removed it will trigger a DOM update (if necessary).
+Reactive application state. Whenever a property is updated or removed it will trigger a DOM update (if necessary).
+
+```{warning}
+Keys must be present at initialization to be reactive. Adding a new a key after initialization will _not_ trigger an update.
+```
 
 Values are expected to be a `string`, `number`, `object`, `array`, `boolean`, `null`, `undefined` or `function`.
 
@@ -103,7 +170,14 @@ A shared store manager, i.e. `reStated`, `Redux`, [Litestate](https://github.com
 ### `shadowDOM`
 [`boolean`: `true`]
 
-Components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components) and by default it will be  attached to a `Shadow DOM` to help encapsulate it from the rest of the page with [scoped CSS](template.md#scoped-css). Disable this behavior by setting `shadowDOM` to `false` and allow the component to be affected by the page's CSS styles.
+Components are created as a [`Custom Element`](https://developer.mozilla.org/en-US/docs/Web/Web_Components) and by default it will be  attached to a `Shadow DOM` to help encapsulate it from the rest of the page with [scoped CSS](template.md#scoped-css). Disable this behavior by setting `shadowDOM` to `false` so the component will be affected by the page's CSS styles.
+
+### `debug`
+[`boolean`: `false`]
+
+Whether or not to output configuration error messages to the page.
+
+![Error message](../img/debug-error.png)
 
 ## Methods
 
@@ -113,15 +187,65 @@ Components are created as a [`Custom Element`](https://developer.mozilla.org/en-
 
 Gets called when the component is created.
 
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    tagName: 'hello-world',
+    template: `Hello {this.world}!`,
+    created() {
+      console.log('This will log when the component is created')
+    }
+  });
+</script>
+
+<hello-world></hello-world>
+```
+
 #### `updated`
 
 Gets called each time the [`data`](#data) or the [`$store`](#store) updates the component's state.
+
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    tagName: 'hello-world',
+    template: `Hello {this.world}!`,
+    updated() {
+      console.log('This will log when the component is updated')
+    }
+  });
+</script>
+
+<hello-world></hello-world>
+```
 
 #### `removed`
 
 Gets called when the component is removed.
 
+```html
+<script type="module">
+  import Dlite from '//unpkg.com/dlite';
+
+  Dlite({
+    tagName: 'hello-world',
+    template: `Hello {this.world}!`,
+    removed() {
+      console.log('This will log when the component is removed')
+    }
+  });
+</script>
+
+<hello-world></hello-world>
+```
+
 ### Custom methods
+
+Custom methods can be accessed via `this`.
 
 ```js
 Dlite({
@@ -141,10 +265,15 @@ You can use async methods with `async` and `await`.
 ```js
 Dlite({
   el: '#app',
+  data: {
+    status: 'unknown',
+    apiData: {},
+  }
   async loadData() {
     this.data.status = 'loading...';
     const res = await fetch('https://some-api.com/data.json');
-    const data = await res.data;
+    
+    this.data.apiData = await res.data;
     this.data.status = 'loading completed!';
   },
   async created(event) {
