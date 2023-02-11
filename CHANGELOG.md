@@ -1,7 +1,11 @@
+# 0.16.1
+- Include `link` tags with a `rel` of `stylesheet` for `Shadow DOM` scoped css
+
 # 0.16.0
 - Scoped CSS when attached to a `Shadow DOM`
 - Make `shadowDOM` default `true` (again) now that scoped CSS is working
 - Add `debug` setting to show `dlite` error messages on the page while developing
+- Include attributes when converting from a regular DOM element to a Web Component
 - Return components from `Dlite` initializer for use in JavaScript
 
 ## Breaking changes

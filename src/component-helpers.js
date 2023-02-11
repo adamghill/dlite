@@ -120,12 +120,12 @@ export const domConnector = (template) => {
 
   let html = toStrLit(decodeHTMLStringForDirective(body.innerHTML));
 
-  // Add style elements
-  head.querySelectorAll("style").forEach((el) => {
+  // Add style + link elements
+  head.querySelectorAll('style, link[rel="stylesheet"]').forEach((el) => {
     html += el.outerHTML;
   });
 
-  // TODO: Add script elements; they do not get executed
+  // TODO: Add script elements; however, they do not get executed
 
   const lit = parseLit(html);
 
@@ -134,10 +134,10 @@ export const domConnector = (template) => {
     render: (target, state) => {
       const { head: newHead, body: newBody } = htmlToDom(lit(state));
 
-      // Add style elements
-      newBody.append(...newHead.querySelectorAll("style"));
+      // Add style + link elements
+      newBody.append(...newHead.querySelectorAll("style, link"));
 
-      // TODO: Add script elements; they do not get executed
+      // TODO: Add script elements; however, they do not get executed
 
       return !target.isEqualNode(newBody) ? emerj(target, newBody) : false;
     },

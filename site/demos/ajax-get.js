@@ -1,7 +1,7 @@
 // import Dlite from "//unpkg.com/dlite";
 import Dlite, { fetcher } from "../../src/index.js";
 
-const template = await fetcher("components/ajax-get.js.html");
+const template = await fetcher("components/ajax-get/ajax-get.js.html");
 
 let components = [];
 
