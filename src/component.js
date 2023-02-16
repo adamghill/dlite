@@ -125,6 +125,26 @@ export default function Component(options = {}) {
       }
 
       /**
+       * Renders the component.
+       * @param {boolean} firstRender Whether it is the first render or not.
+       */
+      render(firstRender = false) {
+        updateComputedState(this._state);
+
+        if (
+          dom.render(this.$root, { ...this._state, ...renderContext }) &&
+          !firstRender
+        ) {
+          configuration.updated.call(this.context);
+        }
+
+        // Make the `Custom Element` visible now that it's been rendered
+        if (this.style.visibility === "hidden") {
+          this.style.removeProperty("visibility");
+        }
+      }
+
+      /**
        * When element is added
        * @returns {void}
        */
@@ -139,18 +159,7 @@ export default function Component(options = {}) {
           prop: getAttrs(this, true),
         };
 
-        const data = objectOnChange(this._state, () => {
-          updateComputedState(this._state);
-
-          if (dom.render(this.$root, { ...this._state, ...renderContext })) {
-            configuration.updated.call(this.context);
-          }
-
-          // Make the `Custom Element` visible now that it's been rendered
-          if (this.style.visibility === "hidden") {
-            this.style.removeProperty("visibility");
-          }
-        });
+        const data = objectOnChange(this._state, this.render.bind(this));
 
         this.disconnectStore = store(data);
         this.$root.innerHTML = dom.html;
@@ -172,9 +181,7 @@ export default function Component(options = {}) {
         bindPublicMethodsToContext(this, methods, this.context);
 
         // Initial setup + first rendering
-        updateComputedState(this._state);
-
-        dom.render(this.$root, { ...this._state, ...renderContext });
+        this.render(true);
 
         configuration.created.call(this.context);
       }
