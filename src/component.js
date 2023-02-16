@@ -129,6 +129,10 @@ export default function Component(options = {}) {
        * @returns {void}
        */
       connectedCallback() {
+        if (!this.isConnected) {
+          return;
+        }
+
         this._state = {
           ...this._state,
           ...initialState,
