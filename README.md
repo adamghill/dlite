@@ -41,19 +41,11 @@ The easiest way to use `dlite` is with a script tag.
 </script>
 ```
 
-You can also install via NPM.
-
-```
-npm install dlite
-```
-
-```js
-import Dlite from 'dlite';
-```
+More [details about installation](https://dlitejs.com/installation/).
 
 ## 🔄 Canonical counter example
 
-An example counter component to give you a sense of what `dlite` looks like. Many more examples are in the [full documentation](https://dlitejs.com).
+An example counter component to give you a sense of what `dlite` looks like. See more [examples](https://dlitejs.com/examples/).
 
 ```html
 <script type="module">
@@ -83,13 +75,11 @@ An example counter component to give you a sense of what `dlite` looks like. Man
 </template>
 ```
 
-More examples at https://dlitejs.com.
-
 ## 🙋 FAQ
 
 ### How big is `dlite`?
 
-`dlite` is **<10 kB** (**<4 kB** when gzipped) and no dependencies.
+`dlite` is **<10 kB** (**<5 kB** when gzipped) and has no dependencies.
 
 ### Why yet another JavaScript library?
 
@@ -101,7 +91,7 @@ _A real answer from the original author of `Litedom`:_
 
 So, one week-end afternoon (4/20 weekend 2019 :), while working on a personal project using a static site generator, I thought it was way too much of an overhead to bring in something like Vue, React or Angular, just to make a small piece reactive on the personal static site. 
 
-So [Mardix] decided to create Litedom, to just be a simple drop-in view library that can make any sections of the site reactive without the overhead. [Mardix] wanted... HTML to stay as is. No React, no Vue, just... HTML and me.
+So [Mardix] decided to create `Litedom`, to just be a simple drop-in view library that can make any sections of the site reactive without the overhead. [Mardix] wanted... HTML to stay as is. No React, no Vue, just... HTML and me.
 
 ### Does it replace React, Vue etc?
 

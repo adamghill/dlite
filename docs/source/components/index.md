@@ -3,7 +3,7 @@
 `dlite` turns HTML into composable, fully compliant `Web Component`s. The easiest way to initialize `dlite` is via an `ES Module` import.
 
 ```{warning}
-Make sure to specify `module` for the `script` element's `type` attribute.
+Make sure to specify `module` for the `script` element's `type`.
 ```
 
 ```html
@@ -15,7 +15,7 @@ Make sure to specify `module` for the `script` element's `type` attribute.
 </script>
 ```
 
-or
+or download [dlite.es.js](https://raw.githubusercontent.com/adamghill/dlite/main/dist/dlite.es.js) and serve it.
 
 ```html 
 <script type="module" src="dlite.es.js"></script>
