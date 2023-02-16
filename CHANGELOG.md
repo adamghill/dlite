@@ -1,3 +1,6 @@
+# 0.16.2
+- Remove `visibility: hide` on first component render
+
 # 0.16.1
 - Include `link` tags with a `rel` of `stylesheet` for `Shadow DOM` scoped css
 

@@ -3,23 +3,26 @@
  * https://github.com/bryhoyt/emerj
  */
 
-import { getAttrs, isElement } from './utils.js';
+import { getAttrs, isElement } from "./utils.js";
 
-const getNodesByKey = (parent, makeKey) =>
+export const getNodesByKey = (parent, makeKey) =>
   Array.from(parent.childNodes)
-    .filter(e => makeKey(e))
-    .map(e => ({ [makeKey(e)]: e }))
+    .filter((e) => makeKey(e))
+    .map((e) => ({ [makeKey(e)]: e }))
     .reduce((pV, cK) => ({ ...pV, ...cK }), {});
 
 /**
  *
  * @param {HTMLElement} node
  */
-const nodeRefKey = node => (isElement(node) && node.hasAttribute('ref-key') ? node.getAttribute('ref-key') : node.id);
+const nodeRefKey = (node) =>
+  isElement(node) && node.hasAttribute("ref-key")
+    ? node.getAttribute("ref-key")
+    : node.id;
 
 export default function merge(base, modified, opts = {}) {
-  opts = { key: node => nodeRefKey(node), ...opts };
-  if (typeof modified === 'string') {
+  opts = { key: (node) => nodeRefKey(node), ...opts };
+  if (typeof modified === "string") {
     const html = modified;
     modified = document.createElement(base.nodeName);
     modified.innerHTML = html;
@@ -36,13 +39,20 @@ export default function merge(base, modified, opts = {}) {
 
     const newKey = opts.key(newNode);
     if (opts.key(baseNode) || newKey) {
-      const match = newKey && newKey in nodesByKeyOld ? nodesByKeyOld[newKey] : newNode;
+      const match =
+        newKey && newKey in nodesByKeyOld ? nodesByKeyOld[newKey] : newNode;
       if (match !== baseNode) baseNode = base.insertBefore(match, baseNode);
     }
-    if (baseNode.nodeType !== newNode.nodeType || baseNode.tagName !== newNode.tagName) {
+    if (
+      baseNode.nodeType !== newNode.nodeType ||
+      baseNode.tagName !== newNode.tagName
+    ) {
       base.replaceChild(newNode, baseNode);
-    } else if ([Node.TEXT_NODE, Node.COMMENT_NODE].indexOf(baseNode.nodeType) >= 0) {
-      if (baseNode.textContent !== newNode.textContent) baseNode.textContent = newNode.textContent;
+    } else if (
+      [Node.TEXT_NODE, Node.COMMENT_NODE].indexOf(baseNode.nodeType) >= 0
+    ) {
+      if (baseNode.textContent !== newNode.textContent)
+        baseNode.textContent = newNode.textContent;
     } else if (baseNode !== newNode) {
       const attrsBase = getAttrs(baseNode);
       const attrsNew = getAttrs(newNode);
@@ -50,7 +60,8 @@ export default function merge(base, modified, opts = {}) {
         if (!(attr in attrsNew)) baseNode.removeAttribute(attr);
       }
       for (const attr in attrsNew) {
-        if (!(attr in attrsBase && attrsBase[attr] === attrsNew[attr])) baseNode.setAttribute(attr, attrsNew[attr]);
+        if (!(attr in attrsBase && attrsBase[attr] === attrsNew[attr]))
+          baseNode.setAttribute(attr, attrsNew[attr]);
       }
       merge(baseNode, newNode);
     }
