@@ -2,7 +2,7 @@
  * @vitest-environment jsdom
  */
 
-import { test, expect } from "vitest";
+import { describe, test, expect } from "vitest";
 
 import {
   filterMethods,
@@ -54,11 +54,90 @@ test("storeConnector", () => {
   expect(storeInstance).toBeInstanceOf(Function);
 });
 
-test("domConnector", () => {
-  const template = "<div>Hello World</div>";
-  const dom = domConnector(template);
+describe("domConnector", () => {
+  test("div", () => {
+    const template = "<div>Hello World</div>";
+    const dom = domConnector(template);
 
-  expect(dom).toBeInstanceOf(Object);
-  expect(dom.html).toBe(template);
-  expect(dom.render).toBeInstanceOf(Function);
+    expect(dom).toBeInstanceOf(Object);
+    expect(dom.html).toBe(template);
+    expect(dom.render).toBeInstanceOf(Function);
+  });
+
+  test("div with template literal", () => {
+    const template = `<div>
+  Hello {this.world}
+</div>
+`;
+    const dom = domConnector(template);
+
+    const target = document.createElement("div");
+    const state = { world: "World" };
+
+    // Check that the template literal gets converted as expected
+    expect(dom).toBeInstanceOf(Object);
+    expect(dom.html).toBe(
+      `<div>
+  Hello \${this.world}
+</div>
+`
+    );
+    expect(dom.render).toBeInstanceOf(Function);
+
+    // Check that it renders as expected
+    expect(target.innerHTML).toBe("");
+    expect(dom.render(target, state)).toBe(true);
+    expect(target.innerHTML).toBe(
+      `<div>
+  Hello World
+</div>
+`
+    );
+  });
+
+  test("div with template literal and style", () => {
+    const template = `<div>
+  <style>
+    * {
+      color: green;
+    }
+  </style>
+  Hello {this.world}
+</div>
+`;
+    const dom = domConnector(template);
+
+    const target = document.createElement("div");
+    const state = { world: "World" };
+
+    // Check that the template literal gets converted as expected
+    expect(dom).toBeInstanceOf(Object);
+    expect(dom.html).toBe(
+      `<div>
+  <style>
+    * {
+      color: green;
+    }
+  </style>
+  Hello \${this.world}
+</div>
+`
+    );
+    expect(dom.render).toBeInstanceOf(Function);
+
+    // Check that it renders as expected
+    expect(target.innerHTML).toBe("");
+    expect(dom.render(target, state)).toBe(true);
+    expect(target.innerHTML).toBe(
+      `<div>
+  <style>
+    * {
+      color: green;
+    }
+  </style>
+  Hello World
+</div>
+`
+    );
+  });
 });
