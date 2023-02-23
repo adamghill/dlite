@@ -2,7 +2,11 @@
 
 ## How big is `dlite`?
 
-`dlite` is **~3.5kB** when gzipped.
+`dlite` is **<5 kB** when gzipped.
+
+## Does size _really_ matter?
+
+For JavaScript libraries, yes. The less JavaScript to download and parse, the faster your site will render. Ipso facto, your users will be happier and the world will be a better place.
 
 ## Why yet another JavaScript library?
 
@@ -27,10 +31,6 @@ No, the DOM is ridiculously fast.
 [The DOM isn't slow, you are](https://korynunn.wordpress.com/2013/03/19/the-dom-isnt-slow-you-are/) goes into more depth, although skip it if you do not want to read some spicy takes.
 
 `dlite` uses `emerj` to modify the DOM and it has a section about performance in [Emerj.js: efficient HTML UI in 60 lines](https://blog.brush.co.nz/2017/11/emerj-js-efficient-html-ui-in-60-lines).
-
-## Does size _really_ matter?
-
-For JavaScript libraries, yes. The less JavaScript to download and parse, the faster your site will render. Ipso facto, your users will be happier and the world will be a better place.
 
 ## Who created this?
 
