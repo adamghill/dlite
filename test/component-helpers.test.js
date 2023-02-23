@@ -78,7 +78,7 @@ describe("domConnector", () => {
     expect(dom).toBeInstanceOf(Object);
     expect(dom.html).toBe(
       `<div>
-  Hello \${this.world}
+  Hello \${typeof this.world != 'undefined' ? this.world : ''}
 </div>
 `
     );
@@ -119,7 +119,7 @@ describe("domConnector", () => {
       color: green;
     }
   </style>
-  Hello \${this.world}
+  Hello \${typeof this.world != 'undefined' ? this.world : ''}
 </div>
 `
     );

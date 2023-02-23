@@ -3,6 +3,7 @@
  */
 
 import { describe, test, expect } from "vitest";
+import { Fixture } from "./helpers.js";
 
 import {
   isFn,
@@ -167,130 +168,117 @@ describe("GET", () => {
 });
 
 describe("toStrLit", () => {
-  test("string to string", () => {
-    expect(toStrLit("hello world")).toBe("hello world");
-  });
-
-  test("string with var", () => {
-    expect(toStrLit("hello {key}")).toBe("hello ${key}");
-  });
-
-  test("string with var with method inside", () => {
-    expect(toStrLit("hello {key.aFunction()}")).toBe(
-      "hello ${key.aFunction()}"
-    );
-  });
-
-  test("string with var with properties", () => {
-    expect(toStrLit("hello {key.val.something }")).toBe(
-      "hello ${key.val.something }"
-    );
-  });
-
-  test("string with var with operations", () => {
-    expect(toStrLit("hello {key.val.something + y + z}")).toBe(
-      "hello ${key.val.something + y + z}"
-    );
-  });
-
-  test("string with var with ternary", () => {
-    expect(toStrLit("hello {this.x ? y : z}")).toBe("hello ${this.x ? y : z}");
-  });
-
-  test("string with var with inside space left", () => {
-    expect(toStrLit("hello  {  key}")).toBe("hello  ${  key}");
-  });
-
-  test("string with var with inside space left", () => {
-    expect(toStrLit("hello <div id='{key}'></div>")).toBe(
-      "hello <div id='${key}'></div>"
-    );
-  });
-
-  test("string with var with inside space right", () => {
-    expect(toStrLit("hello  {  key   }")).toBe("hello  ${  key   }");
-  });
-
-  test("string with var with inside space right 2", () => {
-    expect(toStrLit("hello  {key   }")).toBe("hello  ${key   }");
-  });
-
-  test("string with var with leading extra space", () => {
-    expect(toStrLit("hello  {key}")).toBe("hello  ${key}");
-  });
-
-  test("string with var with trailing extra space", () => {
-    expect(toStrLit("hello  {key}   ")).toBe("hello  ${key}   ");
-  });
-
-  test("string with $", () => {
-    expect(toStrLit("hello ${key}")).toBe("hello ${key}");
-  });
-
-  test("string with $$", () => {
-    expect(toStrLit("hello $${key}")).toBe("hello $${key}");
-  });
-
-  test("string with $ with a method inside", () => {
-    expect(toStrLit("hello ${key.aFunction()}")).toBe(
-      "hello ${key.aFunction()}"
-    );
-  });
-
-  test("string with $ with ternary", () => {
-    expect(toStrLit("hello ${this.x ? y : z}")).toBe("hello ${this.x ? y : z}");
+  [
+    new Fixture("hello world", "hello world", "string to string"),
+    new Fixture(
+      "hello {key}",
+      "hello ${typeof key != 'undefined' ? key : ''}",
+      "string with var"
+    ),
+    new Fixture(
+      "hello {key.aFunction()}",
+      "hello ${typeof key.aFunction() != 'undefined' ? key.aFunction() : ''}",
+      "string with var with method inside"
+    ),
+    new Fixture(
+      "hello {key.val.something }",
+      "hello ${typeof key.val.something  != 'undefined' ? key.val.something  : ''}",
+      "string with var with properties"
+    ),
+    new Fixture(
+      "hello {key.val.something + y + z}",
+      "hello ${typeof key.val.something + y + z != 'undefined' ? key.val.something + y + z : ''}",
+      "string with var with operations"
+    ),
+    new Fixture(
+      "hello {this.x ? y : z}",
+      "hello ${typeof this.x ? y : z != 'undefined' ? this.x ? y : z : ''}",
+      "string with var with ternary"
+    ),
+    new Fixture(
+      "hello  {  key}",
+      "hello  ${typeof   key != 'undefined' ?   key : ''}",
+      "string with var with inside space left"
+    ),
+    new Fixture(
+      "hello <div id='{key}'></div>",
+      "hello <div id='${typeof key != 'undefined' ? key : ''}'></div>",
+      "string with var with inside space left"
+    ),
+    new Fixture(
+      "hello  {  key   }",
+      "hello  ${typeof   key    != 'undefined' ?   key    : ''}",
+      "string with var with inside space right"
+    ),
+    new Fixture(
+      "hello  {key   }",
+      "hello  ${typeof key    != 'undefined' ? key    : ''}",
+      "string with var with inside space right 2"
+    ),
+    new Fixture(
+      "hello  {key}",
+      "hello  ${typeof key != 'undefined' ? key : ''}",
+      "string with var with leading extra space"
+    ),
+    new Fixture(
+      "hello  {key}   ",
+      "hello  ${typeof key != 'undefined' ? key : ''}   ",
+      "string with var with trailing extra space"
+    ),
+    new Fixture(
+      "hello ${key}",
+      "hello ${typeof key != 'undefined' ? key : ''}",
+      "string with $"
+    ),
+    new Fixture(
+      "hello $${key}",
+      "hello $${typeof key != 'undefined' ? key : ''}",
+      "string with $$"
+    ),
+    new Fixture(
+      "hello ${key.aFunction()}",
+      "hello ${typeof key.aFunction() != 'undefined' ? key.aFunction() : ''}",
+      "string with $ with a method inside"
+    ),
+    new Fixture(
+      "hello ${this.x ? y : z}",
+      "hello ${typeof this.x ? y : z != 'undefined' ? this.x ? y : z : ''}",
+      "string with $ with ternary"
+    ),
+  ].forEach((fixture) => {
+    test(fixture.name, () => {
+      expect(toStrLit(fixture.data)).toBe(fixture.expected);
+    });
   });
 });
 
 describe("kebabCase", () => {
-  test("hello", () => {
-    expect(kebabCase("hello")).toBe("hello");
-  });
-
-  test("hello-world", () => {
-    expect(kebabCase("hello-world")).toBe("hello-world");
-  });
-
-  test("helloWorld", () => {
-    expect(kebabCase("helloWorld")).toBe("hello-world");
-  });
-
-  test("helloworld", () => {
-    expect(kebabCase("helloworld")).toBe("helloworld");
-  });
-
-  test("helloAWorld", () => {
-    expect(kebabCase("helloAWorld")).toBe("hello-a-world");
-  });
-
-  test("HelloWorld", () => {
-    expect(kebabCase("HelloWorld")).toBe("hello-world");
-  });
-
-  test("HelloABCWorld", () => {
-    expect(kebabCase("HelloABCWorld")).toBe("hello-a-b-c-world");
+  [
+    new Fixture("hello", "hello"),
+    new Fixture("hello-world", "hello-world"),
+    new Fixture("helloWorld", "hello-world"),
+    new Fixture("helloworld", "helloworld"),
+    new Fixture("helloAWorld", "hello-a-world"),
+    new Fixture("HelloWorld", "hello-world"),
+    new Fixture("HelloABCWorld", "hello-a-b-c-world"),
+  ].forEach((fixture) => {
+    test(fixture.name, () => {
+      expect(kebabCase(fixture.data)).toBe(fixture.expected);
+    });
   });
 });
 
 describe("camelCase", () => {
-  test("hello", () => {
-    expect(camelCase("hello")).toBe("hello");
-  });
-
-  test("hello-world", () => {
-    expect(camelCase("hello-world")).toBe("helloWorld");
-  });
-
-  test("hello_world", () => {
-    expect(camelCase("hello_world")).toBe("helloWorld");
-  });
-
-  test("hello world", () => {
-    expect(camelCase("hello world")).toBe("helloWorld");
-  });
-
-  test("hello my world", () => {
-    expect(camelCase("hello my world")).toBe("helloMyWorld");
+  [
+    new Fixture("hello", "hello"),
+    new Fixture("hello-world", "helloWorld"),
+    new Fixture("hello_world", "helloWorld"),
+    new Fixture("hello world", "helloWorld"),
+    new Fixture("hello my world", "helloMyWorld"),
+  ].forEach((fixture) => {
+    test(fixture.name, () => {
+      expect(camelCase(fixture.data)).toBe(fixture.expected);
+    });
   });
 });
 

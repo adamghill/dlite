@@ -60,9 +60,15 @@ components = Dlite(
     shadowDOM: true,
     data: { activity: {} },
     async created() {
-      const url = "https://www.boredapi.com/api/activity";
-      const activity = await fetcher(url);
-      this.data.activity = activity;
+      // const url = "https://www.boredapi.com/api/activity";
+      // const activity = await fetcher(url);
+      // this.data.activity = activity;
+
+      const activity = await fetcher("https://www.boredapi.com/api/activity");
+
+      setTimeout(() => {
+        this.data.activity = activity;
+      }, 500);
     },
   }
 );

@@ -126,7 +126,8 @@ export const parseLit = (tpl) => (state) => {
 export const toStrLit = (str) => {
   return str.replace(
     /\$?\{([^\;\{]+)\}/g,
-    (_, expression) => `\${${expression}}`
+    (_, expression) =>
+      `\${typeof ${expression} != 'undefined' ? ${expression} : ''}`
   );
 };
 
