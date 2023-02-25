@@ -26,7 +26,7 @@
 ## Run demo site
 
 1. `npm run r`
-1. Go to http://localhost:4000/demos/ in your browser
+1. Go to http://localhost:4000/site/demos/ in your browser
 
 ## Publish new version
 
