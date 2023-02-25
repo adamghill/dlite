@@ -7,7 +7,12 @@
 ## Run documentation site
 
 1. `npm run sa`
-1. Go to localhost:8000 in your browser
+1. Go to http://localhost:8000 in your browser
+
+## Run documentation site via Docker
+
+1. docker build -t dlite . && docker container run -p 8557:80 dlite:latest
+1. Go to http://localhost:8557 in your browser
 
 ## Build documentation site
 
@@ -21,7 +26,7 @@
 ## Run demo site
 
 1. `npm run r`
-1. Go to localhost:4000/demos/ in your browser
+1. Go to http://localhost:4000/demos/ in your browser
 
 ## Publish new version
 
