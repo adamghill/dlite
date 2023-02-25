@@ -1,7 +1,7 @@
 {
   "name": "dlite",
   "pkgName": "dlite",
-  "version": "0.16.2",
+  "version": "0.17.0",
   "author": "adamghill",
   "license": "MIT",
   "description": "A tiny, blazing fast view library that creates reactive Web Components.",

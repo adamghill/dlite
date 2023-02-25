@@ -1,3 +1,6 @@
+# 0.17.0
+- Make component methods available from template.
+
 # 0.16.2
 - Remove `visibility: hide` on first component render
 
