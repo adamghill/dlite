@@ -81,6 +81,15 @@ export default function Component(options = {}) {
     ...options,
   };
 
+  return registerComponent(configuration);
+}
+
+function registerComponent(configuration) {
+  /**
+   * @type {HTMLElement} The component's custom element
+   */
+  let customElement = null;
+
   const store = storeConnector(configuration.$store);
   const dom = domConnector(configuration.template);
   const methods = filterMethods(configuration);
@@ -92,11 +101,6 @@ export default function Component(options = {}) {
    * @type {function} Update the computed states
    */
   const updateComputedState = (state) => computedState.forEach((s) => s(state));
-
-  /**
-   * @type {HTMLElement} The component's custom element
-   */
-  let customElement = null;
 
   /**
    * Register the Web Component
@@ -157,6 +161,7 @@ export default function Component(options = {}) {
           ...this._state,
           ...initialState,
           prop: getAttrs(this, true),
+          ...methods,
         };
 
         const data = objectOnChange(this._state, this.render.bind(this));
