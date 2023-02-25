@@ -5,11 +5,23 @@ const template = await fetcher("components/ajax-get/ajax-get.js.html");
 
 let components = [];
 
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
 // components = Dlite({
 //   el: "#template-shadow",
 //   template: template,
 //   debug: true,
 //   data: { activity: {} },
+//   getPrice() {
+//     if (this.data.activity.price == 0) {
+//       return "Free!";
+//     }
+
+//     return formatter.format(this.data.activity.price);
+//   },
 //   async created() {
 //     const url = "https://www.boredapi.com/api/activity";
 //     const activity = await fetcher(url);
@@ -37,6 +49,13 @@ components = Dlite(
     },
   ],
   {
+    getPrice() {
+      if (this.data.activity.price == 0) {
+        return "Free!";
+      }
+
+      return formatter.format(this.data.activity.price);
+    },
     debug: true,
     shadowDOM: true,
     data: { activity: {} },

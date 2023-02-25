@@ -145,7 +145,7 @@ export default function Component(options = {}) {
       }
 
       /**
-       * When element is added
+       * Called when the element is added
        * @returns {void}
        */
       connectedCallback() {
@@ -177,8 +177,11 @@ export default function Component(options = {}) {
         // Bind events
         bindEvents(this.$root, { ...this.context, __$bindInput });
 
-        // Bind all the exports methods so it can be accessed in the element
+        // Add methods to `this` so they can be accessed in the component
         bindPublicMethodsToContext(this, methods, this.context);
+
+        // Add methods to `_state` and bind `this` to them so they have access to `data`
+        bindPublicMethodsToContext(this._state, methods, this.context);
 
         // Initial setup + first rendering
         this.render(true);
