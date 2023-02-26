@@ -9,7 +9,10 @@ COPY site ./site
 RUN pip install poetry 
 RUN poetry install --only main
 
-# Build docs to the site directory
+# Copy changelog to docs
+RUN cp CHANGELOG.md docs/source/changelog.md
+
+# Build docs in the site directory
 RUN poetry run sphinx-build -W -b dirhtml docs/source site
 
 FROM nginx

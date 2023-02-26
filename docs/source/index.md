@@ -40,9 +40,11 @@ Logo: https://openmoji.org/library/emoji-1F4A1/
 :hidden:
 
 self
+changelog
 installation
 faq
 examples
+
 ```
 
 ```{toctree}
@@ -65,5 +67,7 @@ components/store
 :hidden:
 
 GitHub <https://github.com/adamghill/dlite>
+Releases <https://github.com/adamghill/dlite/releases>
+NPM <https://www.npmjs.com/package/dlite>
 Sponsor <https://github.com/sponsors/adamghill>
 ```

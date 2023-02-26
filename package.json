@@ -30,8 +30,8 @@
     "b": "npm run build && stat -f%z dist/dlite.es.js | numfmt --to=iec --suffix=B --format='%.2f' && npm run size",
     "build": "rollup -c",
     "r": "DEV_SERVER_PORT=4000 DEV_SERVER_ROOT=. dev-server",
-    "sb": "poetry run sphinx-build -W -b dirhtml docs/source site",
-    "sa": "poetry run sphinx-autobuild -W -b dirhtml docs/source docs/build"
+    "sb": "cp CHANGELOG.md docs/source/changelog.md && poetry run sphinx-build -W -b dirhtml docs/source site",
+    "sa": "cp CHANGELOG.md docs/source/changelog.md && poetry run sphinx-autobuild -W -b dirhtml docs/source docs/build"
   },
   "jest": {
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.jsx?$"
