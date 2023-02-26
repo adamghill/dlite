@@ -1,3 +1,6 @@
+# 0.19.0
+- Update `emerj` merging algorithm to the latest version.
+
 # 0.18.0
 - Don't show `undefined` when rendering the template.
 
