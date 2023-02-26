@@ -1,5 +1,5 @@
-// import Dlite, { fetcher } from "//unpkg.com/dlite";
-import Dlite, { fetcher } from "../../src/index.js";
+import Dlite, { fetcher } from "//unpkg.com/dlite";
+// import Dlite, { fetcher } from "../../src/index.js";
 
 const template = await fetcher("components/ajax-get/ajax-get.js.html");
 
