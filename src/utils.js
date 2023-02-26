@@ -87,15 +87,6 @@ export const isObjKeyFn = (obj, key) => {
 };
 
 /**
- * check if an object is HTMLElement
- * @param {any} obj
- * @returns
- */
-export const isElement = (obj) => {
-  return obj instanceof HTMLElement;
-};
-
-/**
  * Turn an HTML string into HTMLElement
  * @param {string} html
  * @returns {{head: HTMLHeadElement, body: HTMLElement}}
