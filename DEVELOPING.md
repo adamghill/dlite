@@ -32,7 +32,7 @@
 
 1. Update `CHANGELOG.md`
 1. Update version in `package.json`
-1. `npm run t && npm run b && npm run sb`
+1. `npm run t && npm run b`
 1. Commit/tag/push changes
 1. `npm publish`
 1. [Create a new release](https://github.com/adamghill/dlite/releases/new)

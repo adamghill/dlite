@@ -1,3 +1,6 @@
+# 0.18.0
+- Don't show `undefined` when rendering the template.
+
 # 0.17.0
 - Make component methods available from template.
 
